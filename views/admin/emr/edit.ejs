@@ -1,0 +1,256 @@
+<%- include ../../partials/header.ejs%>
+<%- include ../../partials/navbar.ejs%>
+<%- include ../../partials/sidebar.ejs%>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Patient Data</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item "><a href="/emr">Patient Data</a></li>
+              <li class="breadcrumb-item active">Edit Electronic Medical Record</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Form Edit "<%= emr.name %>"</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="/emr/edit/<%= emr._id %>?_method=PUT" method="POST">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="name">Name</label>
+                      <input type="name" name="name" value="<%= emr.name %>" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Age</label>
+                      <input type="number" name="age" value="<%= emr.age %>" class="form-control" id="exampleInputEmail1" placeholder="Enter Age" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Gender</label>
+                      <select class="form-control select2" style="width: 100%;" name="gender" required>
+                        <option value="Men"
+                        <% if(emr.gender === "Men"){%>    
+                            selected
+                        <% } %>   
+                        > Laki-Laki (Men)</option>
+                      <option value="Woman"
+                        <% if(emr.genderr === "Woman"){%>    
+                        selected
+                        <% } %>   
+                        >Winita (Woman)</option>
+                      <option value="Others"
+                        <% if(emr.gender === "Others"){%>    
+                        selected
+                        <% } %>  
+                        >Others</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Address</label>
+                      <input type="name" name="address" value="<%= emr.address %>" class="form-control" id="exampleInputEmail1" placeholder="Enter address" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Job</label>
+                      <input type="name" name="job" value="<%= emr.job %>" class="form-control" id="exampleInputEmail1" placeholder="Enter Job" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Hospital medical data</label>
+                        <p>(Diagnosis Medis, catatan klinis, medika mentosa, hasil lab, foto ronses )</p>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" value="<%= emr.hospitalData %>" name="hospitalData" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Assesmen Fisioterapi <br>A. Assesmen Umum <br>1. KELUHAN UTAMA DAN RIWAYAT PENYAKIT SEKARANG</label>
+                             <p>(Termasuk didalamnya lokasi keluhan, 
+                                omset, penyebab, faktor-2 yang memperberat atau memperingan, 
+                                irritabilitas dan derajad berat keluhan, sifat keluahan dalam 24 jam, stadium dari kondisi)</p>
+                            <div id="cid_45" class="form-input-wide" data-layout="full">
+                                <textarea id="input_45" class="form-control" value="<%= emr.primaryComplain %>" name="primaryComplain" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">2. RIWAYAT KELUARGA DAN STATUS SOSIAL
+                            
+                             </label>
+                             <p>(Lingkungan kerja, lingkungan tempat tinggal, aktivitas rekreasi dan diwaktu senggang, aktivitas sosial)</p>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" name="famHistory" value="<%= emr.famHistory %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">3. RIWAYAT PENYAKIT TERDAHULU</label>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" name="medHistory" value="<%= emr.medHistory %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">B. Assesmen Khusus <br>1.	PEMERIKSAAN TANDA VITAL</label>
+                             <p>(Tekanan darah, denyut nadi, pernapasan, temperatur, tinggi badan, berat badan)</p>
+                            <div id="cid_45" class="form-input-wide" data-layout="full">
+                                <textarea id="input_45" class="form-control" name="vitalExam" value="<%= emr.vitalExam %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">2. INPEKSI</label>
+                        <p>(Inspeksi Statis dan Dinamis)</p>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" name="inspection" value="<%= emr.inspection %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">3. PALPASI</label>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" name="palpation" value="<%= emr.palpation %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">4. PERKUSI</label>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" name="percussion" value="<%= emr.percussion %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">5. AUSKULTASI</label>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" name="auscultation" value="<%= emr.auscultation %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">6. PEMERIKSAAN FUNGSI GERAK DASAR</label>
+                        <p>( Quick tes, Gerak aktif, gerak pasif dan isometrik)</p>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" name="functionCheck" value="<%= emr.functionCheck %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">7. PEMERIKSAAN SPESIFIK</label>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" name="specificInspect" value="<%= emr.specificInspect %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">C. DIAGNOSIS FISIOTERAPI</label>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" name="diagnosis" value="<%= emr.diagnosis %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">D. RENCANA FISIOTERAPIK</label>
+                        <p>(Tujuan jangka pendek dan panjang)</p>
+                        <div id="cid_45" class="form-input-wide" data-layout="full">
+                            <textarea id="input_45" class="form-control" name="plan" value="<%= emr.plan %>" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Intervensi N0. 1</label>
+                      <input type="name" name="intervensi1" class="form-control" value="<%= emr.intervensi1 %>" id="exampleInputEmail1" placeholder="Intervensi Pertama" required>
+                    </div>                    
+                    <div class="form-group">
+                      <label for="name">Intervensi N0. 2</label>
+                      <input type="name" name="intervensi2" class="form-control"  value="<%= emr.intervensi2 %>"id="exampleInputEmail1" placeholder="Intervensi Kedua" >
+                    </div>                    
+                    <div class="form-group">
+                      <label for="name">Intervensi N0. 3</label>
+                      <input type="name" name="intervensi3" class="form-control" value="<%= emr.intervensi3 %>" id="exampleInputEmail1" placeholder="Intervensi Ketiga" >
+                    </div>                    
+                    <div class="form-group">
+                      <label for="name">Intervensi N0. 4</label>
+                      <input type="name" name="intervensi4" class="form-control" value="<%= emr.intervensi4 %>" id="exampleInputEmail1" placeholder="Intervensi Keempat" >
+                    </div>                    
+                    <div class="form-group">
+                      <label for="name">Intervensi N0. 5</label>
+                      <input type="name" name="intervensi5" class="form-control" value="<%= emr.intervensi5 %>" id="exampleInputEmail1" placeholder="Intervensi Kelima" >
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Intervensi N0. 6</label>
+                      <input type="name" name="intervensi6" class="form-control" value="<%= emr.intervensi6 %>" id="exampleInputEmail1" placeholder="Intervensi Keenam" >
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Intervensi N0. 7</label>
+                      <input type="name" name="intervensi7" class="form-control" value="<%= emr.intervensi7 %>" id="exampleInputEmail1" placeholder="Intervensi Ketujuh" >
+                    </div>
+
+                    <div class="form-group">
+                      <label>Nama therapist</label>
+                      <select class="form-control select2" style="width: 100%;" name="therapist" required>
+                        <option selected="selected">Choose therapist</option>
+                        <% therapist.forEach(therapist=>{ %>
+                          <option value="<%= therapist._id %>" 
+                            <% if(therapist._id.toString() === emr?.therapist?._id.toString()) { %>
+                                selected
+                              <% }%>
+                            >
+                            <%= therapist.therapistName %>
+                          </option>
+                        <% }) %>
+                        
+                      </select>
+                    </div>
+
+
+                  
+                  
+                  <!-- <div class="card-body">
+                    <a href="../intervensi/create" class="btn btn-outline-primary">
+                        <i class="nav-icon fas fa-plus-circle"></i>
+                        Add Intervensi</a>
+                  </div>
+                  <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                      <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Nama Intervensi</th>
+                  
+                      </tr>
+                      </thead>
+                    </table>
+                    <tbody>
+
+                    </tbody>                 -->
+                    
+                  
+                
+                  </div>
+                  <!-- /.card-body -->
+                  
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+            <!-- /.card -->
+
+
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    
+    <!-- /.content -->
+  </div>
+
+<%- include ../../partials/footer.ejs%>
+<%- include ../../partials/js.ejs%>

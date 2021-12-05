@@ -1,0 +1,117 @@
+<%- include ../../partials/header.ejs%>
+<%- include ../../partials/navbar.ejs%>
+<%- include ../../partials/sidebar.ejs%>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Physiotherapy Staff Data</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item "><a href="/therapist">Staff Data</a></li>
+              <li class="breadcrumb-item active">Edit Staff</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Form Edit "<%= therapist.therapistName %>"</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="/therapist/edit/<%= therapist._id %>?_method=PUT" method="POST">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="name">Name</label>
+                      <input type="name" value="<%= therapist.therapistName %>" name="therapistName" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Age</label>
+                      <input type="number" value="<%= therapist.therapistAge %>" name="therapistAge" class="form-control" id="exampleInputEmail1" placeholder="Enter Age" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Gender</label>
+                      <select class="form-control select2" style="width: 100%;" name="therapistGender" required>
+                        <option value="Men"
+                        <% if(therapist.therapistGender === "Men"){%>    
+                            selected
+                        <% } %>   
+                        > Laki-Laki (Men)</option>
+                      <option value="Woman"
+                        <% if(therapist.therapistGender === "Woman"){%>    
+                        selected
+                        <% } %>   
+                        >Winita (Woman)</option>
+                      <option value="Others"
+                        <% if(therapist.therapistGender === "Others"){%>    
+                        selected
+                        <% } %>  
+                        >Others</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Phnoe Number</label>
+                        <input type="name" value="<%= therapist.therapistpPhoneNumber %>" name="therapistpPhoneNumber" class="form-control" id="exampleInputEmail1" placeholder="Enter phone number" required>
+                      </div>
+
+                  
+                  
+                  <!-- <div class="card-body">
+                    <a href="../intervensi/create" class="btn btn-outline-primary">
+                        <i class="nav-icon fas fa-plus-circle"></i>
+                        Add Intervensi</a>
+                  </div>
+                  <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                      <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Nama Intervensi</th>
+                  
+                      </tr>
+                      </thead>
+                    </table>
+                    <tbody>
+
+                    </tbody>                 -->
+                    
+                  
+                
+                  </div>
+                  <!-- /.card-body -->
+                  
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+            <!-- /.card -->
+
+
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    
+    <!-- /.content -->
+  </div>
+
+<%- include ../../partials/footer.ejs%>
+<%- include ../../partials/js.ejs%>

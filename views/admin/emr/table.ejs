@@ -1,0 +1,47 @@
+
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>No.</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Gender</th>
+      <th>Primary Complain</th>
+      <th>Diagnosis</th>
+      <th>Examiner</th>
+      <th>Action</th>
+
+    </tr>
+    </thead>
+    <tbody>
+      <% for (let i = 0; i <emr.length; i++ ) {%>
+        <tr>
+          <td>
+            <%= i + 1 %>
+            
+          </td>
+          <td><%= emr[i].name %> </td>
+          <td><%= emr[i].age %></td>
+          <td><%= emr[i].gender %></td>
+          <td><%= emr[i].primaryComplain %></td>
+          <td><%= emr[i].diagnosis %></td>
+          <td><%= emr[i]?.therapist?.therapistName ?? '-' %></td>
+          <td>
+            <form action="/emr/delete/<%= emr[i]._id%>?_method=DELETE" method="POST">
+              <a href="/emr/edit/<%= emr[i]._id %>"class="btn btn-outline-info btn-sm">
+                <i class="fas fa-edit"></i>
+                  Edit
+              </a>
+              <button class="btn btn-outline-warning btn-sm"><i class="far fa-eye"></i>View</button>
+              <button class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i>Delete</button>
+            </form>
+          </td>
+        </tr>
+       <% } %> 
+ 
+      
+      
+    </tbody>
+
+  </table>                
+  
