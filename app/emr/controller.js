@@ -16,8 +16,8 @@ module.exports ={
             res.render('admin/emr/view_emr',{
                 emr,
                 alert,
-                // name: req.session.user.name,
-                title: 'EMR Page'
+                name: req.session.user.name,
+                title: 'Electronic Medical Record Page'
             })
         } catch (err) {
             req.flash('alertMessage', `${err.message}`)
@@ -33,7 +33,7 @@ module.exports ={
             res.render('admin/emr/create',{
                 therapist,
                 intervensi,
-                // name: req.session.user.name,
+                name: req.session.user.name,
                 title: 'Add EMR Page'
             })
         } catch (err) {
@@ -80,7 +80,7 @@ module.exports ={
                 emr,
                 intervensi,
                 therapist,
-                // name: req.session.user.name,
+                name: req.session.user.name,
                 title: 'Edit EMR Page'
             });
         } catch (err) {
