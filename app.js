@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var bodyParser = require('body-parser');
+
 const session = require('express-session')
 const flash = require('connect-flash');
 
@@ -11,6 +13,8 @@ const dashboardRouter = require('./app/dashboard/route');
 const emrRouter = require('./app/emr/router');
 const therapistRouter = require('./app/therapist/router');
 const intervensiRouter = require('./app/intervensi/route');
+const usersRouter = require('./app/users/route');
+
 
 
 
@@ -34,7 +38,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/adminlte',express.static(path.join(__dirname,'/node_modules/admin-lte/')))
-app.use('/', dashboardRouter);
+
+app.use('/', usersRouter);
+app.use('/dashboard', dashboardRouter);
 app.use('/emr', emrRouter);
 app.use('/therapist', therapistRouter);
 app.use('/intervensi', intervensiRouter);
@@ -44,7 +50,9 @@ app.use('/intervensi', intervensiRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+app.use(bodyParser.json());
 
+app.use(bodyParser.urlencoded({ extended: true }));
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
