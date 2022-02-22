@@ -44,19 +44,25 @@ module.exports ={
     },
     actionCreate : async(req,res)=>{
         try {
-            const {name,age,gender,address,job,
+            // let dates = emr.date
+            // dates = new Date().toString()
+            
+            let {name,age,gender,address,job,
                 hospitalData,primaryComplain,famHistory,
                 medHistory,vitalExam,inspection,palpation,
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
-                intervensi4,intervensi5,intervensi6,intervensi7,therapist} = req.body
+                intervensi4,intervensi5,intervensi6,intervensi7,therapist,date
+                 } = req.body
             let emr = await EMR({name,age,gender,address,job,
                 hospitalData,primaryComplain,famHistory,
                 medHistory,vitalExam,inspection,palpation,
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
-                intervensi4,intervensi5,intervensi6,intervensi7,therapist})
+                intervensi4,intervensi5,intervensi6,intervensi7,therapist,
+                date  })
             await emr.save();
+            console.log(date)
             req.flash('alertMessage',"added successfully")
             req.flash('alertStatus', "success")
             console.log('Berhasil')
@@ -98,7 +104,7 @@ module.exports ={
                 medHistory,vitalExam,inspection,palpation,
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
-                intervensi4,intervensi5,intervensi6,intervensi7,therapist}=req.body
+                intervensi4,intervensi5,intervensi6,intervensi7,therapist,date}=req.body
              await EMR.findByIdAndUpdate({
                 _id:id
             },{name,age,gender,address,job,
@@ -106,7 +112,7 @@ module.exports ={
                 medHistory,vitalExam,inspection,palpation,
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
-                intervensi4,intervensi5,intervensi6,intervensi7,therapist})
+                intervensi4,intervensi5,intervensi6,intervensi7,therapist,date})
             req.flash('alertMessage',"edit successfully")
             req.flash('alertStatus', "success")
             res.redirect('/emr')

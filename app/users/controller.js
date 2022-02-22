@@ -97,7 +97,13 @@ module.exports = {
   },actionSignup: async(req,res)=>{
     try {
         const{email,name,password,role,status,phoneNumber} = req.body
-
+        const check = await User.findOne({ email: email })
+        console.log(check)
+        if(check !== null){
+          req.flash('alertMessage', 'email sudah digunakan')
+          req.flash('alertStatus', 'danger')
+          res.redirect('/sign_up')
+        }
         bcrypt.hash(password,10).then((hash) =>{
         let user = new User({
             email,

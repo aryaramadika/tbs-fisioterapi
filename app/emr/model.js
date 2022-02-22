@@ -77,6 +77,8 @@ const emrScheme = mongoose.Schema({
     },therapist:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Therapist'
+    },date:{
+        type: Date
     }
         
     

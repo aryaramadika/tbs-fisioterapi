@@ -9,6 +9,9 @@
       <th>Primary Complain</th>
       <th>Diagnosis</th>
       <th>Examiner</th>
+      <th>Date</th>
+      <!-- <th>Month</th>
+      <th>Date</th> -->
       <th>Action</th>
 
     </tr>
@@ -26,6 +29,9 @@
           <td><%= emr[i].primaryComplain %></td>
           <td><%= emr[i].diagnosis %></td>
           <td><%= emr[i]?.therapist?.therapistName ?? '-' %></td>
+          <td><%= new Date(emr[i].date).toLocaleDateString('en-us', {  year:"numeric", month:"numeric", day:"numeric"}) %></td>
+          <!-- <td><%= new Date(emr[i].date).toLocaleDateString('en-us', {  month:"short"}) %></td>
+          <td><%= new Date(emr[i].date).toLocaleDateString('en-us', {  day:"numeric",weekday:"long"}) %></td> -->
           <td>
             <form action="/emr/delete/<%= emr[i]._id%>?_method=DELETE" method="POST">
               <a href="/emr/edit/<%= emr[i]._id %>"class="btn btn-outline-info btn-sm">
