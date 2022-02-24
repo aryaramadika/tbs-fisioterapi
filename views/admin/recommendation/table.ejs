@@ -1,0 +1,60 @@
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>No.</th>
+      <th>Nama Pasien</th>
+      <th>Recommendation</th>
+      <th>Next Treatment</th>
+      <th>Therapist</th>
+      <th>Status</th>
+      <th>Aksi</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% for(let i = 0; i < recommendation.length; i++){ %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td><%= recommendation[i]?.emr?.name ?? '-' %></td>
+          <td><%= recommendation[i].recommendations %> </td>
+          <td><%= recommendation[i].nextTreatment %> </td>
+          <td><%= recommendation[i]?.therapist?.therapistName ?? '-' %></td>
+          <td>
+            <% if(recommendation[i].status === 'Y') { %>
+              <span class="badge badge-success">
+                Selesai
+              </span>
+            <% } else { %>
+              <span class="badge badge-danger">
+                Pending
+              </span>
+            <% } %>
+          </td>
+          
+          <td>
+            <form action="/recommendation/status/<%= recommendation[i]._id %>?_method=PUT" method="POST" style="display: inline-block;">
+              <button class="btn btn-outline-primary btn-sm">
+                <i class="fas fa-folder"></i>
+                <% if(recommendation[i].status === 'Y') { %>
+                  
+                    Matikan
+                  
+                <% } else { %>
+                    Hidupkan
+                <% } %>
+              </button>
+            </form>
+            <a href="/recommendation/edit/<%= recommendation[i]._id %>" class="btn btn-outline-info btn-sm">
+              <i class="fas fa-pencil-alt"></i>
+              Ubah
+            </a>
+            <form style="display: inline-block;" action="/recommendation/delete/<%= recommendation[i]._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-outline-danger btn-sm">
+                <i class="fas fa-trash"></i>
+                Hapus
+              </button>
+            </form>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>

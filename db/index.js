@@ -3,8 +3,8 @@ const { urlDb } = require('../config')
 
 mongoose.connect(urlDb, {
   useUnifiedTopology: true,
-//   useFindAndModify: false,
-//   useCreateIndex: false,
+  // useFindAndModify: false,
+  useCreateIndex: true,
   useNewUrlParser: true 
 })
 
