@@ -35,7 +35,7 @@
               <div class="card-body">
                 <div class="form-group">
                   <label>Nama Pasien</label>
-                  <select class="form-control select2" style="width: 100%;" name="emr" required>
+                  <select class="form-control select2" style="width: 100%;" name="emr" id="name" required>
                     <option selected="selected">Choose Patient</option>
                     <% emr.forEach(emr=>{ %>
                       <option value="<%= emr._id %>"><%=emr.name %></option>
@@ -46,16 +46,16 @@
                 <div class="form-group">
                     <label for="recommend">Recommendation</label>
                     <div id="cid_45" class="form-input-wide" data-layout="full">
-                        <textarea id="input_45" class="form-control" name="recommend" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
+                        <textarea id="input_45" class="form-control" name="recommend" id="recommend" style="height:163px" data-component="textarea" aria-labelledby="label_45"></textarea>
                       </div>
                 </div>
                 <div class="form-group">
                     <label for="date">Next Treatment Date</label>
-                    <input type="date" name="date" class="form-control" id="exampleInputEmail1" placeholder="Enter Date" required>
+                    <input type="date" name="date" id="date" class="form-control"  placeholder="Enter Date" required>
                 </div>
                 <div class="form-group">
                       <label>Nama therapist</label>
-                      <select class="form-control select2" style="width: 100%;" name="therapist" required>
+                      <select class="form-control select2" style="width: 100%;" name="therapist" id="therapist" required>
                         <option selected="selected">Choose therapist</option>
                         <% therapist.forEach(therapist=>{ %>
                           <option value="<%= therapist._id %>"><%= therapist.therapistName %></option>

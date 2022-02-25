@@ -14,7 +14,7 @@ const emrRouter = require('./app/emr/router');
 const therapistRouter = require('./app/therapist/router');
 const intervensiRouter = require('./app/intervensi/route');
 const usersRouter = require('./app/users/route');
-const recommedationRouter = require('./app/recommendation/route');
+const recommendationRouter = require('./app/recommendation/route');
 
 
 
@@ -45,7 +45,7 @@ app.use('/dashboard', dashboardRouter);
 app.use('/emr', emrRouter);
 app.use('/therapist', therapistRouter);
 app.use('/intervensi', intervensiRouter);
-app.use('/recommendation', recommedationRouter);
+app.use('/recommendation', recommendationRouter);
 
 
 // catch 404 and forward to error handler

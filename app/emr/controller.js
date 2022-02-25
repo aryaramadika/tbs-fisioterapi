@@ -61,6 +61,8 @@ module.exports ={
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
                 intervensi4,intervensi5,intervensi6,intervensi7,therapist,
                 date  })
+            console.log(req.body)
+            console.log(emr)    
             await emr.save();
             console.log(date)
             req.flash('alertMessage',"added successfully")

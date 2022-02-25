@@ -47,15 +47,17 @@ module.exports ={
   
     actionCreate : async(req,res)=>{
         try {
-            const{emr,recommend,date,therapist} =  req.body
-            let recommendation = 
-            new Recommendation({
+            const {emr,recommend,date,therapist} =  req.body
+            let recommendation = await Recommendation({
                 emr,
                 recommend,
                 date,
                 therapist
             })
-            await recommendation.save();
+            console.log(req.body)
+            console.log(recommendation)
+            // await recommendation.save();
+            // console.log(req.body)
             console.log(recommendation)
             req.flash('alertMessage',"added successfully")
             req.flash('alertStatus', "success")
