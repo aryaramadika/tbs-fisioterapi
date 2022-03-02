@@ -1,0 +1,77 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+  <tr>
+    <th>No.</th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Gender</th>
+    <th>Phone Number</th>
+    <th>Status</th>
+    <th>Action</th>
+
+
+
+  </tr>
+  </thead>
+  <tbody>
+
+    <% for(let i =0 ; i<queue.length; i++){ %>
+      <tr>
+        <td>
+          <%= i + 1 %>
+          
+        </td>
+        <td><%= queue[i].name %> </td>
+        <td><%= queue[i].age %></td>
+        <td><%= queue[i].gender %></td>
+        <td><%= queue[i].phoneNumber %></td>
+        <td>
+          <% if(queue[i].status==='ongoing' ) { %>
+            <span class="badge badge-warning">
+              <%= queue[i].status %>
+            </span>
+            <% } else if(queue[i].status==='treated' ) { %>
+              <span class="badge badge-success">
+                <%= queue[i].status %>
+              </span>
+              <% } else { %>
+                <span class="badge badge-danger">
+                  <%= queue[i].status %>
+                </span>
+                <%} %>
+        </td>
+        
+        <td>
+          <form style="display: inline-block;"
+          action="/queue/status/<%= queue[i]._id %>?status=ongoing&_method=PUT" method="POST">
+          <button class="btn btn-warning btn-sm" type="submit">
+            <i class="fa-solid fa-timer"></i>
+            Periksa
+          </button>
+        </form>
+        <form style="display: inline-block;"
+          action="/queue/status/<%= queue[i]._id %>?status=treated&_method=PUT" method="POST">
+          <button class="btn btn-info btn-sm" type="submit">
+            <i class="fas fa-check"></i>
+            Selesai
+          </button>
+        </form>
+        <!-- <a href="/queue/edit/<%= queue[i]._id %>" class="btn btn-outline-info btn-sm">
+          <i class="fas fa-pencil-alt"></i>
+          Ubah
+        </a> -->
+        <form style="display: inline-block;" action="/queue/delete/<%= queue[i]._id %>?_method=DELETE" method="POST">
+          <button class="btn btn-outline-danger btn-sm">
+            <i class="fas fa-trash"></i>
+            Hapus
+          </button>
+        </form>
+        </td>
+      </tr>
+     <% } %> 
+
+    
+  </tbody>
+
+</table>                
+

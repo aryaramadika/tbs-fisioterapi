@@ -15,6 +15,11 @@ const therapistRouter = require('./app/therapist/router');
 const intervensiRouter = require('./app/intervensi/route');
 const usersRouter = require('./app/users/route');
 const recommendationRouter = require('./app/recommendation/route');
+const queueRouter = require('./app/queue/router');
+
+
+
+
 
 
 
@@ -46,6 +51,10 @@ app.use('/emr', emrRouter);
 app.use('/therapist', therapistRouter);
 app.use('/intervensi', intervensiRouter);
 app.use('/recommendation', recommendationRouter);
+app.use('/queue', queueRouter);
+// app.use('/handledcount', handledcountountRouter);
+
+
 
 
 // catch 404 and forward to error handler

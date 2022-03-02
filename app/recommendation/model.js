@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-let recommendationSchema = mongoose.Schema({
+const recommendationSchema = mongoose.Schema({
     emr : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'EMR'

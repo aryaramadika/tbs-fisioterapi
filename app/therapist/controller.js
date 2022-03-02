@@ -1,5 +1,6 @@
 const Therapist = require('./model')
 const EMR = require('../emr/model')
+const res = require('express/lib/response')
 module.exports ={
     index: async(req,res) => {
         try {
@@ -48,8 +49,8 @@ module.exports ={
     },
     actionCreate : async(req,res)=>{
         try {
-            const {therapistName,therapistAge,therapistGender,therapistpPhoneNumber,patient} = req.body
-            let therapist = await Therapist({therapistName,therapistAge,therapistGender,therapistpPhoneNumber,patient})
+            const {therapistName,therapistAge,therapistGender,therapistpPhoneNumber,handled} = req.body
+            let therapist = await Therapist({therapistName,therapistAge,therapistGender,therapistpPhoneNumber,handled})
             await therapist.save();
             req.flash('alertMessage',"added successfully")
             req.flash('alertStatus', "success")
@@ -81,10 +82,10 @@ module.exports ={
     actionEdit : async(req,res)=>{
         try {
             const{id}= req.params;
-            const{therapistName,therapistAge,therapistGender,therapistpPhoneNumber,patient}=req.body
+            const{therapistName,therapistAge,therapistGender,therapistpPhoneNumber}=req.body
              await Therapist.findByIdAndUpdate({
                 _id:id
-            },{therapistName,therapistAge,therapistGender,therapistpPhoneNumber,patient})
+            },{therapistName,therapistAge,therapistGender,therapistpPhoneNumber})
             req.flash('alertMessage',"edit successfully")
             req.flash('alertStatus', "success")
             res.redirect('/therapist')
@@ -111,34 +112,126 @@ module.exports ={
             req.flash('alertStatus', 'danger')
             res.redirect('/therapist')
         }
-    }
-    ,patientHandled : async(req,res) =>{
+    },
+    // patientHandled : async(req,res) =>{
+    //     try {
+    //         const{id}= req.params;
+    //         const{handled}=req.query
+    //         const hand = await EMR.find()
+    //         // handled = await EMR.aggregate([
+                
+    //         //     {$match:{therapist:{$in:[id],}}},
+    //         //     {$group:{_id:"$therapist._id",totalpatient:{$sum:1}}}
+            
+    //         // ])
+    //         let count = 0
+    //         if(id === hand._id){
+                
+    //             count = db.hand.count({total: hand.therapist._id})
+    //         }
+    //         handled = count
+
+    //         await therapist.save()
+    //         res.status(200).json({
+    //             data: hand,
+    //             handled: handled.length ? handled[0].value : 0
+    //           })
+    //         // return handled
+    //         // handled = total
+    //         // await therapist.save()
+    //         // req.flash('alertMessage',"Handled")
+    //         // req.flash('alertStatus', "success")
+    //         // res.redirect('/therapist')
+            
+    //     } catch (err) {
+    //         req.flash('alertMessage', `${err.message}`)
+    //         req.flash('alertStatus', 'danger')
+    //         res.redirect('/therapist')
+    //     }
+    // }
+    patientHandled : async(req,res) =>{
         try {
-            const{id}=req.params
-            const {patient} = req.body
+            // const{id}= req.query
+            const {handled} = req.body
             const therapist = await Therapist.find()
             const emr = await EMR.find()
-            const handled = await EMR.find({},therapist._id)
-            for (let i = 0 ; i < emr.length;i++){
-                if (id === handled){
-                    handled += i 
-                    patient = handled
-                    await Therapist.save()
-                    res.render('admin/therapist/view_therapist',{
-                        therapist,
-                        patient,
-                        count : {
-                            handled
+            const{id}= req.therapist._id
+                    total = db.emr.aggregate([
+                        {
+                            $match: {
+                                emr: {
+                                    $therapist : $id
+                                } 
+                            }
+                        },
+                        {
+                            $group: {_id:"$therapist",total:{$sum:"$quantity"}}
                         }
-                    })
+                        
+                    ])
 
-                    console.log(handled)
-                }
-            }
+            handled = total
+            await Therapist.save()
+            res.render('admin/therapist/view_therapist',{
+                therapist,
+                emr,
+            })
         } catch (err) {
-            
+            req.flash('alertMessage', `${err.message}`)
+            req.flash('alertStatus', 'danger')
+            res.redirect('/therapist')
         }
-    }
+    },
+    // patientHandled: async (req, res) => {
+    //     try {
+    //     const{id}= req.params;
+
+    //     const { handled } = req.query;
+    //     // const { status = '' } = req.query;
+
+    //       let criteria = {}
+    
+    //       if (status.length) {
+    //         criteria = {
+    //           ...criteria,
+    //           status: { $regex: "${status}", $options: 'i' }
+    //         }
+    //       }
+    
+    //       if (req.therapist._id) {
+    //         criteria = {
+    //           ...criteria,
+    //           therapist: req.therapist._id
+    //         }
+    //       }
+    //       console.log("criteria")
+    //       console.log(criteria)
+    //       const patientHandled = await EMR.find(criteria)
+    //       // res.status(200).json({
+    //       //   data: history
+    //       // })
+    
+    //       total = await EMR.aggregate([
+    //         { $match: {id:{$_id}} },
+    //         {
+    //           $group: {
+    //             _id: id,
+    //             value: { $sum: "$value" }
+    //           }
+    //         }
+    //       ])
+    //       handled = total.value
+    //       console.log("ini criteria")
+    //       console.log(criteria)
+    //       res.status(200).json({
+    //         data: total,
+    //         handled: patientHandled.length ? patientHandled[0].value : 0
+    //       })
+    
+    //     } catch (err) {
+    //       res.status(500).json({ message: err.message || `Internal server error` })
+    //     }
+    //   },
 
     
 

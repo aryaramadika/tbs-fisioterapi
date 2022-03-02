@@ -25,15 +25,16 @@
           <td><%= therapist[i].therapistAge %></td>
           <td><%= therapist[i].therapistGender %></td>
           <td><%= therapist[i].therapistpPhoneNumber %></td>
+          <td><%= therapist[i].handled %></td>
           <!-- <td><%= therapist[i]._id %></td> -->
-          <% let counter = 0 %>
+          <!-- <% let counter = 0 %>
           <% for(let j = 0 ; j < emrss.length ; i++) {%>
           <% if(therapist[i]._id == emrss[j].therapist._id) {%>
               counter += 1 <% } %>
               
 
           <% } %>
-            <td><%= counter %></td>
+            <td><%= counter %></td> -->
           <td>
             <form action="/therapist/delete/<%= therapist[i]._id%>?_method=DELETE" method="POST">
               <a href="/therapist/edit/<%= therapist[i]._id %>"class="btn btn-outline-info btn-sm">

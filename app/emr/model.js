@@ -79,6 +79,11 @@ const emrScheme = mongoose.Schema({
         ref: 'Therapist'
     },date:{
         type: Date
+    },
+    handled:{
+        type : Number,
+        default: 0
+
     }
         
     

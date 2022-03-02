@@ -12,6 +12,7 @@ module.exports ={
             .populate('therapist')
             console.log('alert >>>')
             console.log(emr)
+            // EMR.count({therapist: _id})
 
             res.render('admin/emr/view_emr',{
                 emr,
@@ -52,7 +53,7 @@ module.exports ={
                 medHistory,vitalExam,inspection,palpation,
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
-                intervensi4,intervensi5,intervensi6,intervensi7,therapist,date
+                intervensi4,intervensi5,intervensi6,intervensi7,therapist,date,handled
                  } = req.body
             let emr = await EMR({name,age,gender,address,job,
                 hospitalData,primaryComplain,famHistory,
@@ -60,7 +61,18 @@ module.exports ={
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
                 intervensi4,intervensi5,intervensi6,intervensi7,therapist,
-                date  })
+                date,handled  })
+            // if(emr !== null ){
+            //     for(let i; i < emr.length;i++){
+            //         if(emr._id === therapist._id){
+            //             handled += i
+            //         }
+            //     }
+            //     req.therapist.handled+=1
+            // }
+            console.log("--------handled-------")
+            console.log(handled)    
+            console.log("--------handled-------")
             console.log(req.body)
             console.log(emr)    
             await emr.save();
@@ -141,7 +153,82 @@ module.exports ={
             req.flash('alertStatus', 'danger')
             res.redirect('/emr')
         }
-    }
+    },
+    patientHandled : async(req,res) =>{
+        try {
+            // const{id}= req.query
+            const {handled} = req.body
+            const therapist = await Therapist.findOne({_id})
+            const emr = await EMR.find()
+                    total = db.emr.aggregate([
+                        {
+                            $match: {_id:therapist}
+                        },
+                        {
+                            $group: {_id:"$therapist._id",total:{$sum:"$quantity"}}
+                        }
+                        
+                    ])
+
+            handled = total
+            await Therapist.save()
+            res.render('admin/therapist/view_therapist',{
+                therapist,
+                emr,
+            })
+        } catch (err) {
+            req.flash('alertMessage', `${err.message}`)
+            req.flash('alertStatus', 'danger')
+            res.redirect('/therapist')
+        }
+    },
+    // patientHandled: async (req, res) => {
+    //     try {
+    //       const { handled } = req.body;
+    
+    //       let criteria = {}
+    
+    //     //   if (handled.length) {
+    //     //     criteria = {
+    //     //       ...criteria,
+    //     //       handled: { $regex: "${handled}", $options: 'i' }
+    //     //     }
+    //     //   }
+    
+    //       if (req.therapist._id) {
+    //         criteria = {
+    //           ...criteria,
+    //           therapist: req.therapist._id
+    //         }
+    //       }
+    //       console.log("criteria")
+    //       console.log(criteria)
+    //       const patientHandled = await Therapist.find(criteria)
+    //       // res.status(200).json({
+    //       //   data: history
+    //       // })
+    
+    //       handled = await Therapist.aggregate([
+    //         { $match: criteria },
+    //         {
+    //           $group: {
+    //             _id: null,
+    //             value: { $sum: "$value" }
+    //           }
+    //         }
+    //       ])
+    //     //   handled = total
+    //       console.log("ini criteria")
+    //       console.log(criteria)
+    //       res.status(200).json({
+    //         data: handled,
+    //         handled: patientHandled.length ? patientHandled[0].value : 0
+    //       })
+    
+    //     } catch (err) {
+    //       res.status(500).json({ message: err.message || `Internal server error` })
+    //     }
+    //   },
 
     
 

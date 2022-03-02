@@ -15,8 +15,8 @@
         <tr>
           <td><%= i + 1 %></td>
           <td><%= recommendation[i]?.emr?.name ?? '-' %></td>
-          <td><%= recommendation[i].recommendations %> </td>
-          <td><%= recommendation[i].nextTreatment %> </td>
+          <td><%= recommendation[i].recommend %> </td>
+          <td><%= new Date(recommendation[i].date).toLocaleDateString('en-us', {  year:"numeric", month:"numeric", day:"numeric"}) %> </td>
           <td><%= recommendation[i]?.therapist?.therapistName ?? '-' %></td>
           <td>
             <% if(recommendation[i].status === 'Y') { %>

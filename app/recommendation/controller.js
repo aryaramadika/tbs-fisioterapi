@@ -47,8 +47,8 @@ module.exports ={
   
     actionCreate : async(req,res)=>{
         try {
-            const {emr,recommend,date,therapist} =  req.body
-            let recommendation = new Recommendation({
+            let {emr,recommend,date,therapist} =  req.body
+            let recommendation = await Recommendation({
                 emr,
                 recommend,
                 date,

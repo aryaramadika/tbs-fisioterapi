@@ -20,7 +20,17 @@ const therapistScheme = mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref: 'EMR'
 
-    }
+    },
+    handled:{
+        type : Number,
+        default: 0
+
+    },
+    // status: {
+    //     type: String,
+    //     enum: ['Y', 'N'],
+    //     default: 'Y'
+    //   },
              
 },{ timestamps: true })
 
