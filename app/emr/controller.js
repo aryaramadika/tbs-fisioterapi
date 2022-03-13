@@ -61,7 +61,7 @@ module.exports ={
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
                 intervensi4,intervensi5,intervensi6,intervensi7,therapist,
-                date,handled  })
+                date })
             // if(emr !== null ){
             //     for(let i; i < emr.length;i++){
             //         if(emr._id === therapist._id){

@@ -3,6 +3,7 @@
     <tr>
       <th>No.</th>
       <th>Nama Pasien</th>
+      <th>Diagnosis Fisioterapi</th>
       <th>Recommendation</th>
       <th>Next Treatment</th>
       <th>Therapist</th>
@@ -15,6 +16,7 @@
         <tr>
           <td><%= i + 1 %></td>
           <td><%= recommendation[i]?.emr?.name ?? '-' %></td>
+          <td><%= recommendation[i]?.emr?.diagnosis ?? '-' %></td>
           <td><%= recommendation[i].recommend %> </td>
           <td><%= new Date(recommendation[i].date).toLocaleDateString('en-us', {  year:"numeric", month:"numeric", day:"numeric"}) %> </td>
           <td><%= recommendation[i]?.therapist?.therapistName ?? '-' %></td>

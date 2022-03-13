@@ -16,6 +16,8 @@ const intervensiRouter = require('./app/intervensi/route');
 const usersRouter = require('./app/users/route');
 const recommendationRouter = require('./app/recommendation/route');
 const queueRouter = require('./app/queue/router');
+const handledRouter = require('./app/handled/router');
+
 
 
 
@@ -52,6 +54,7 @@ app.use('/therapist', therapistRouter);
 app.use('/intervensi', intervensiRouter);
 app.use('/recommendation', recommendationRouter);
 app.use('/queue', queueRouter);
+app.use('/handled', handledRouter);
 // app.use('/handledcount', handledcountountRouter);
 
 

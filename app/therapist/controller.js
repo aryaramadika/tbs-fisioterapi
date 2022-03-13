@@ -12,17 +12,26 @@ module.exports ={
             const therapist = await Therapist.find({})
             .populate('emr')
             const emr = await EMR.countDocuments()
-            const emrss = await EMR.find({_id:id})
+            const emrss = await EMR.find({})
+            const patientEMR = await EMR.aggregate([
+                {$group :{_id:{$toObjectId:"$_id}"}, therapist:{$sum:1}}}
+              ])
+        
+           
+              console.log("EMR by therapist")
+              console.log(patientEMR);
+              const patienThe = await Therapist.aggregate([
+                {$group: {_id:"$therapist",emr:{$sum:1}}}
+              ])
+              console.log("EMR HANDLED BY THERAPTST")
+              console.log(patienThe)
+         
             console.log('alert >>>')
             console.log(therapist)
             
             res.render('admin/therapist/view_therapist',{
                 therapist,
                 alert,
-                count : {
-                    emr
-                },
-                emrss,
                 name: req.session.user.name,
                 title: 'TBS Physiotherapy Staff Page'
             })
@@ -152,25 +161,16 @@ module.exports ={
     patientHandled : async(req,res) =>{
         try {
             // const{id}= req.query
-            const {handled} = req.body
-            const therapist = await Therapist.find()
-            const emr = await EMR.find()
-            const{id}= req.therapist._id
-                    total = db.emr.aggregate([
-                        {
-                            $match: {
-                                emr: {
-                                    $therapist : $id
-                                } 
-                            }
-                        },
-                        {
-                            $group: {_id:"$therapist",total:{$sum:"$quantity"}}
-                        }
-                        
-                    ])
-
-            handled = total
+            const { handled} = req.query;
+            const patienThe = await EMR.aggregate([
+                {$group: {_id:"$therapist",emr:{$sum:1}}}
+              ])
+            //   handled = patienThe.emr
+            // const patienThe = await EMR.aggregate([
+            //     {$group: {_id:"$therapist",emr:{$sum:1}}}
+            //   ])
+            handled = patienThe
+            
             await Therapist.save()
             res.render('admin/therapist/view_therapist',{
                 therapist,

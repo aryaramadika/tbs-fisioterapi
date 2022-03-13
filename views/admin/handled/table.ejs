@@ -1,0 +1,54 @@
+
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>No.</th>
+      <th>Nama Therapist</th>
+      <th>Jumlah Patient </th>
+      <th>Jumlah Bonus</th>
+      <th>Action</th>
+
+    </tr>
+    </thead>
+    <tbody>
+      <% for (let i = 0; i <handled.length; i++ ) {%>
+        <tr>
+          <td>
+            <%= i + 1 %>
+            
+          </td>
+          <td><%= handled[i].therapist?.therapistName??'-' %> </td>
+          <% for ( let x = 0; x < patienThe.length; x++ ) {%>
+            <% if(handled[i].therapist._id === patienThe[x]._id) {%>
+              <%= x + 1 %>
+              <td><%- handled[i].quantityHandled = patienThe[x].count %></td>
+            
+            <% } %>
+            <td><%= patienThe[x].quantityHandled %></td>
+            
+ 
+          <% } %> 
+          <!-- <td><%= handled[i].quantityHandled == patienThe.count  %></td> -->
+
+          <!-- <td><%= handled[i].therapist._id %></td> -->
+          <!-- <td><%= handled[i].emr %></td> -->
+       
+          <td>
+            <form action="/handled/delete/<%= handled[i]._id%>?_method=DELETE" method="POST">
+              <a href="/handled/edit/<%= handled[i]._id %>"class="btn btn-outline-info btn-sm">
+                <i class="fas fa-edit"></i>
+                  Edit
+              </a>
+              <button class="btn btn-outline-warning btn-sm"><i class="far fa-eye"></i>View</button>
+              <button class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i>Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% } %> 
+ 
+      
+      
+    </tbody>
+
+  </table>                
+  

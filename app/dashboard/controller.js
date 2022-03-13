@@ -9,6 +9,15 @@ module.exports = {
 
       const emr = await EMR.countDocuments()
       const therapist = await THERAPIST.countDocuments()
+      
+      const patientEMR = await EMR.aggregate([
+        {$group :{_id:{$toObjectId:"$_id}"}, therapist:{$sum:1}}}
+      ])
+
+   
+      console.log("EMR by therapist")
+      console.log(patientEMR);
+
       res.render('admin/dashboard/view_dashboard', {
         name: req.session.user.name,
         title: 'Halaman Dashboard',
