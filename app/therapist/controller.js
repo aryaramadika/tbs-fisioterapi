@@ -15,17 +15,17 @@ module.exports ={
             const emrss = await EMR.find({})
             const patientEMR = await EMR.aggregate([
                 {$group :{_id:{$toObjectId:"$_id}"}, therapist:{$sum:1}}}
-              ])
+            ])
+    
         
-           
-              console.log("EMR by therapist")
-              console.log(patientEMR);
-              const patienThe = await Therapist.aggregate([
-                {$group: {_id:"$therapist",emr:{$sum:1}}}
-              ])
-              console.log("EMR HANDLED BY THERAPTST")
-              console.log(patienThe)
-         
+            console.log("EMR by therapist")
+            console.log(patientEMR);
+            const patienThe = await Therapist.aggregate([
+            {$group: {_id:"$therapist",emr:{$sum:1}}}
+            ])
+            console.log("EMR HANDLED BY THERAPTST")
+            console.log(patienThe)
+        
             console.log('alert >>>')
             console.log(therapist)
             

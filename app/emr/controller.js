@@ -1,6 +1,7 @@
 const EMR = require('./model')
 const Therapist = require('../therapist/model')
 const Intervensi = require('../intervensi/model')
+const handlingModel = require('../handling/model')
 module.exports ={
     index: async(req,res) => {
         try {
@@ -10,8 +11,8 @@ module.exports ={
             const alert ={ message : alertMessage , status:alertStatus}
             const emr = await EMR.find()
             .populate('therapist')
-            console.log('alert >>>')
-            console.log(emr)
+            // console.log('alert >>>')
+            // console.log(emr)
             // EMR.count({therapist: _id})
 
             res.render('admin/emr/view_emr',{
@@ -54,7 +55,7 @@ module.exports ={
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
                 intervensi4,intervensi5,intervensi6,intervensi7,therapist,date,handled
-                 } = req.body
+                } = req.body
             let emr = await EMR({name,age,gender,address,job,
                 hospitalData,primaryComplain,famHistory,
                 medHistory,vitalExam,inspection,palpation,
@@ -62,25 +63,34 @@ module.exports ={
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
                 intervensi4,intervensi5,intervensi6,intervensi7,therapist,
                 date })
-            // if(emr !== null ){
-            //     for(let i; i < emr.length;i++){
-            //         if(emr._id === therapist._id){
-            //             handled += i
-            //         }
-            //     }
-            //     req.therapist.handled+=1
-            // }
-            console.log("--------handled-------")
-            console.log(handled)    
-            console.log("--------handled-------")
-            console.log(req.body)
-            console.log(emr)    
-            await emr.save();
-            console.log(date)
-            req.flash('alertMessage',"added successfully")
-            req.flash('alertStatus', "success")
-            console.log('Berhasil')
-            res.redirect('/emr') 
+            
+          
+
+
+            console.log("--------emr id-------")
+            console.log(emr._id)
+            
+            console.log("--------terapist id-------")
+            console.log(emr.therapist)
+
+            let handling = await handlingModel.insertMany({
+                emrs: emr._id,
+                therapists: emr.therapist
+            })
+            console.log("--------handling-------")
+            console.log(handling)
+
+
+            // console.log(handled)    
+            // console.log("--------handled-------")
+            // console.log(req.body)
+            // console.log(emr)    
+            // await emr.save();
+            // console.log(date)
+            // req.flash('alertMessage',"added successfully")
+            // req.flash('alertStatus', "success")
+            // console.log('Berhasil')
+            // res.redirect('/emr') 
         } catch (error) {
             req.flash('alertMessage', `${err.message}`)
             req.flash('alertStatus', 'danger')

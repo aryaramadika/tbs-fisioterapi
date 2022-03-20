@@ -18,15 +18,6 @@ const recommendationRouter = require('./app/recommendation/route');
 const queueRouter = require('./app/queue/router');
 const handledRouter = require('./app/handled/router');
 
-
-
-
-
-
-
-
-
-
 var app = express();
 app.use(flash());
 app.use(session({

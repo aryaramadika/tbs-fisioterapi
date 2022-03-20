@@ -8,10 +8,11 @@ module.exports = {
       const alertMessage = req.flash("alertMessage")
       const alertStatus = req.flash("alertStatus")
       const emrs = await EMR.find()
+      const s = await EMR.find()
       const therapist = await Therapist.find()
       const alert = { message: alertMessage, status: alertStatus }
       const handled = await Handled.find().populate('therapist').populate('emr')
-      console.log(EMR)
+      // console.log(EMR)
       // let criteria = {}
       // if (req.therapist._id) {
       //   criteria = {
@@ -24,11 +25,16 @@ module.exports = {
         
         {$group: {_id:"$therapist",quantityHandled:{$sum:1}}}
       ])
+
       console.log("--------------------")
       console.log(handled)
-      console.log("EMR HANDLED BY THERAPTST")
-      console.log(patienThe.length)
-      console.log(patienThe._id === handled.therapist)
+      console.log("-------emrs------")
+      console.log(emrs[0]._id)
+      console.log("-------patienThe------")
+      console.log(patienThe)
+      // console.log("EMR HANDLED BY THERAPTST")
+      // console.log(patienThe.length)
+      // console.log(patienThe._id === handled.therapist)
       // for(let i = 0 ; i < handled.length;i++){
       //   for(let o = 0; o < patienThe.length; o++){
       //     if(handled[i].therapist === patienThe[x]._id){
@@ -38,7 +44,7 @@ module.exports = {
       // }
 
       res.render('admin/handled/view_handled', {
-        handled,
+        handled,s,
         // data : history,
         patienThe ,
         alert,
