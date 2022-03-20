@@ -13,10 +13,15 @@ const therapistScheme = mongoose.Schema({
         require :[true , 'You must enter gender']
     },
     therapistpPhoneNumber:{
-        type : String,
+        type : Number,
         require :[true , 'You must enter phone number']
     },
-            
+    patient:{
+        type : mongoose.Schema.Types.ObjectId,
+        ref: 'EMR'
+
+    }
+             
 },{ timestamps: true })
 
 module.exports = mongoose.model('Therapist',therapistScheme) 

@@ -29,6 +29,14 @@ let userSchema = mongoose.Schema({
     type: String,
     require: [true, 'nomor telpon harus diisi']
   },
+  Address: {
+    type: String,
+    require: [true, 'Alamat harus diisi']
+  },
+  DateofBirth: {
+    type: Date,
+    require: [true, 'tanggal harus diisi']
+  },
 
 }, { timestamps: true })
 
