@@ -1,0 +1,49 @@
+
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Phone Number </th>
+      <th>Date of Birth</th>
+      <th>User Id </th>
+
+      <th>Action</th>
+
+    </tr>
+    </thead>
+    <tbody>
+      <% for (let i = 0; i <users.length; i++ ) {%>
+        <tr>
+          <td><%= users[i].name %> </td>
+          <td><%= users[i].Address %></td>
+          <td><%= users[i].PhoneNumber %></td>
+          <td><%= users[i].DateofBirth %></td>
+          <td><%= users[i]._id %></td>
+          <!-- <% let counter = 0 %>
+          <% for(let j = 0 ; j < emrss.length ; i++) {%>
+          <% if(therapist[i]._id == emrss[j].therapist._id) {%>
+              counter += 1 <% } %>
+              
+
+          <% } %>
+            <td><%= counter %></td> -->
+          <td>
+            <form action="/users/delete/<%= users[i]._id%>?_method=DELETE" method="POST">
+              <a href="/users/editProfile/<%= users[i]._id %>"class="btn btn-outline-info btn-sm">
+                <i class="fas fa-edit"></i>
+                  Edit
+              </a>
+              <button class="btn btn-outline-warning btn-sm"><i class="far fa-eye"></i>View</button>
+              <button class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i>Delete</button>
+            </form>
+          </td>
+        </tr>
+       <% } %> 
+ 
+      
+      
+    </tbody>
+
+  </table>                
+  
