@@ -45,6 +45,7 @@ app.use('/emr', emrRouter);
 app.use('/therapist', therapistRouter);
 app.use('/intervensi', intervensiRouter);
 app.use('/recommendation', recommendationRouter);
+app.use('/recommendation', recommendationRouter);
 
 
 
