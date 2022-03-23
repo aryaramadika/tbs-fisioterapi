@@ -14,11 +14,7 @@ let handledSchema = mongoose.Schema({
       type : Number,
       default:0,
   },
-  status: {
-    type: String,
-    enum: ['working', 'resting'],
-    default: 'work'
-  },
+
 
 }, { timestamps: true })
 

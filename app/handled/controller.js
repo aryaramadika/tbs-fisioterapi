@@ -20,15 +20,21 @@ module.exports = {
       //   }
       // }
       // const history = await EMR.find(criteria)
-      const patienThe = await EMR.aggregate([
+      // const patienThe = await EMR.aggregate([
         
-        {$group: {_id:"$therapist",quantityHandled:{$sum:1}}}
-      ])
+      //   {$group: {_id:"$therapist",quantityHandled:{$sum:1}}}
+      // ])
+
+      const patienThe = await EMR.aggregate([
+          {$group: {_id:"$therapist",count:{$sum:1}}},
+          // {$push:{count:{$sum:1}}}
+
+        ])
       console.log("--------------------")
       console.log(handled)
       console.log("EMR HANDLED BY THERAPTST")
-      console.log(patienThe.length)
-      console.log(patienThe._id === handled.therapist)
+      console.log(patienThe)
+      // console.log(patienThe._id === handled.therapist)
       // for(let i = 0 ; i < handled.length;i++){
       //   for(let o = 0; o < patienThe.length; o++){
       //     if(handled[i].therapist === patienThe[x]._id){
@@ -60,7 +66,6 @@ module.exports = {
         const emr = await EMR.find()
  
         console.log("--------------------------------")
-        console.log(emr.therapist)
         res.render('admin/handled/create',{
             therapist,
             emr,
@@ -76,21 +81,21 @@ module.exports = {
   },
   handledChecker: async(req,res) =>{
       try {
-        const {therapist,emr,quantityHandled} = req.body
-        
-        const emrs = await EMR.find()
-        const patienThe = await EMR.aggregate([
-          {$group: {_id:"$therapist",count:{$sum:1}}}
-        ])
-        // emrs.forEach(emrs =>{
-        //     if(patienThe._id === emrs.therapist){
-        //         emr = emrs.name,
-        //         quantityHandled = patienThe[1].count
-        //     }
-        //   return quantityHandled      
-        //   })
+        const {therapist,emr,quantityHandled } = req.body 
+        const{id}= req.params;
+
         let handled = await Handled({therapist,emr,quantityHandled})
+        handled(
+          { _id:"$therapist" },
+          { $push: { quantityHandled:{$sum:1} } }
+       )
         await handled.save()
+        await Handled.findByIdAndUpdate({
+          _id:therapist
+        },{therapist,emr,quantityHandled} )
+      
+        
+
         console.log("--------------------------------")
         console.log(quantityHandled)  
         console.log("--------------------------------")

@@ -18,7 +18,7 @@ let userSchema = mongoose.Schema({
   role: {
     type: String,
     enum: ['admin', 'user'],
-    default: 'admin' 
+    default: 'admin'
   },
   status: {
     type: String,
@@ -28,6 +28,14 @@ let userSchema = mongoose.Schema({
   phoneNumber: {
     type: String,
     require: [true, 'nomor telpon harus diisi']
+  },
+  Address: {
+    type: String,
+    require: [true, 'Alamat harus diisi']
+  },
+  DateofBirth: {
+    type: Date,
+    require: [true, 'tanggal harus diisi']
   },
 
 }, { timestamps: true })

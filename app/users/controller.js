@@ -7,11 +7,13 @@ module.exports = {
     try {
       const alertMessage = req.flash("alertMessage")
       const alertStatus = req.flash("alertStatus")
-
+      const user = await User.find({})
+      console.log(user)
       const alert = { message: alertMessage, status: alertStatus }
       if (req.session.user === null || req.session.user === undefined) {
         res.render('admin/users/view_signin', {
           alert,
+          user,
           // name: req.session.user.name,
           title: 'Login Page for Therapists'
         })
@@ -39,6 +41,9 @@ module.exports = {
             req.session.user = {
               id: check._id,
               email: check.email,
+              Address: check.Address,
+              phoneNumber: check.phoneNumber,
+              DateofBirth: check.DateofBirth,
               status: check.status,
               name: check.name
             }
@@ -81,7 +86,7 @@ module.exports = {
         res.render('admin/users/view_signup', {
           alert,
           // name: req.session.user.name,
-          title: 'SignUp Page for Therapists'
+          title: 'Sign Up Page for Therapists'
         })
       }else{
         res.redirect('/sign_up')
@@ -96,22 +101,19 @@ module.exports = {
     }
   },actionSignup: async(req,res)=>{
     try {
-        const{email,name,password,role,status,phoneNumber} = req.body
-        const check = await User.findOne({ email: email })
-        console.log(check)
-        if(check !== null){
-          req.flash('alertMessage', 'email sudah digunakan')
-          req.flash('alertStatus', 'danger')
-          res.redirect('/sign_up')
-        }
+        const{name, email,password,status, role, Address, DateofBirth, phoneNumber} = req.body
+
         bcrypt.hash(password,10).then((hash) =>{
         let user = new User({
-            email,
             name,
+            email,
             password:hash,
-            role,
             status,
+            role,
+            Address,
+            DateofBirth,
             phoneNumber
+            
         })
         user.save()
         })
@@ -123,5 +125,95 @@ module.exports = {
         req.flash('alertStatus', 'danger')
         res.redirect('/sign_up')
     }
-  }
+  },
+  viewSetupProfile: async (req, res) => {
+    try {
+      const alertMessage = req.flash("alertMessage")
+      const alertStatus = req.flash("alertStatus")
+
+      const alert = { message: alertMessage, status: alertStatus }
+      if (req.session.user === null || req.session.user === undefined) {
+        res.render('admin/users/view_setupProfile', {
+          alert,
+          // name: req.session.user.name,
+          title: 'SignUp Page for Therapists'
+        })
+      }else{
+        res.redirect('/setup_profile')
+      }
+
+      
+    } catch (err) {
+      req.flash('alertMessage', `${err.message}`)
+      req.flash('alertStatus', 'danger')
+      res.redirect('/')
+
+    }
+  },actionSetupProfile: async(req,res)=>{
+    try {
+        const{ Address,role,DateofBirth,phoneNumber} = req.body
+        let user = new User({
+            Address,
+            role,
+            DateofBirth,
+            phoneNumber
+        })
+        user.save()
+        
+        req.flash('alertMessage', "Berhasil Registrasi")
+        req.flash('alertStatus', "success")
+        res.redirect('/')
+    } catch (err) {
+        req.flash('alertMessage', `${err.message}`)
+        req.flash('alertStatus', 'danger')
+        res.redirect('/setup_profile')
+    }
+  },
+
+  viewManageProfile: async(req,res) =>{
+    try {
+        // const{id}= req.params;
+        // const user = await User.findOne({id:req.session.user._id})
+        
+        res.render('admin/users/editProfile',{
+            user: req.session.user,
+            name: req.session.user.name,
+            title: 'Manage Profile Page'
+        });
+    } catch (err) {
+        req.flash('alertMessage', `${err.message}`)
+        req.flash('alertStatus', 'danger')
+        res.redirect('/dashboard')
+        console.log(err);
+    }
+},
+
+actionManageProfile : async(req,res)=>{
+    try {
+        console.log(req.body)
+        const{id}= req.params;
+        const{name,Address,phoneNumber,DateofBirth}=req.body
+        
+         await User.findByIdAndUpdate({
+            _id:req.session.user.id
+        },{name,Address,phoneNumber,DateofBirth})
+        req.session.user = {
+          id: id,
+          email: req.session.user.email,
+          Address: Address,
+          phoneNumber: phoneNumber,
+          DateofBirth: DateofBirth,
+          status: req.session.user.status,
+          name: name
+        }
+        req.flash('alertMessage',"edit successfully")
+        req.flash('alertStatus', "success")
+        res.redirect('/dashboard')
+    } catch (err) {
+        req.flash('alertMessage', `${err.message}`)
+        req.flash('alertStatus', 'danger')
+        res.redirect('/manage_profile')
+        console.log(err)
+    }
+}
 }

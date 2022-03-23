@@ -33,7 +33,7 @@
           </td>
           
           <td>
-            <form action="/recommendation/status/<%= recommendation[i]._id %>?_method=PUT" method="POST" style="display: inline-block;">
+            <!-- <form action="/recommendation/status/<%= recommendation[i]._id %>?_method=PUT" method="POST" style="display: inline-block;">
               <button class="btn btn-outline-primary btn-sm">
                 <i class="fas fa-folder"></i>
                 <% if(recommendation[i].status === 'Y') { %>
@@ -44,11 +44,11 @@
                     Hidupkan
                 <% } %>
               </button>
-            </form>
-            <a href="/recommendation/edit/<%= recommendation[i]._id %>" class="btn btn-outline-info btn-sm">
+            </form> -->
+            <!-- <a href="/recommendation/edit/<%= recommendation[i]._id %>" class="btn btn-outline-info btn-sm">
               <i class="fas fa-pencil-alt"></i>
               Ubah
-            </a>
+            </a> -->
             <form style="display: inline-block;" action="/recommendation/delete/<%= recommendation[i]._id %>?_method=DELETE" method="POST">
               <button class="btn btn-outline-danger btn-sm">
                 <i class="fas fa-trash"></i>
