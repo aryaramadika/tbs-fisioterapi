@@ -8,7 +8,8 @@
       <th>Gender</th>
       <th>Phone Number </th>
       <!-- <th>User Id </th> -->
-      <th>Patient Handled</th>
+      <!-- <th>Therapist Id</th>
+      <th>Patient Handled</th> -->
 
       <th>Action</th>
 
@@ -25,7 +26,8 @@
           <td><%= therapist[i].therapistAge %></td>
           <td><%= therapist[i].therapistGender %></td>
           <td><%= therapist[i].therapistpPhoneNumber %></td>
-          <td><%= therapist[i]._id %></td>
+          <!-- <td><%= therapist[i]._id %></td>
+          <td><%= therapist[i].handled %></td> -->
        
           <td>
             <form action="/therapist/delete/<%= therapist[i]._id%>?_method=DELETE" method="POST">

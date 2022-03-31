@@ -3,10 +3,9 @@
     <thead>
     <tr>
       <th>No.</th>
+      <th>ID Therapist</th>
       <th>Nama Therapist</th>
-      <th>Nama Patient </th>
       <th>Jumlah Patient </th>
-      <th>Jumlah Bonus</th>
       <th>Action</th>
 
     </tr>
@@ -18,12 +17,14 @@
             <%= i + 1 %>
             
           </td>
+          <td><%= handled[i].therapist._id %> </td>
           <td><%= handled[i].therapist?.therapistName??'-' %> </td>
-          <td><%= handled[i].emr?.name??'-' %></td>
+          <!-- <td><%= handled[i].emr?.name??'-' %></td>
           
-            <td><%= handled[i].quantityHandled  %></td>
+            <td><%= handled[i].quantityHandled  %></td> -->
 
-          <td></td>
+          <td><%= handled[i].therapist?.handled??'-' %></td>
+          <!-- <td></td> -->
           
        
           <td>

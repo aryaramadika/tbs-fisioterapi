@@ -5,15 +5,15 @@ let handledSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Therapist'
   },
-  emr : {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'EMR'
-    // type : String
-  },
-  quantityHandled:{
-      type : Number,
-      default:0,
-  },
+  // emr : {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'EMR'
+  //   // type : String
+  // },
+  // quantityHandled:{
+  //     type : Number,
+  //     default:0,
+  // },
 
 
 }, { timestamps: true })

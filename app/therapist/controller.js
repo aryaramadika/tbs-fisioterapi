@@ -1,6 +1,8 @@
 const Therapist = require('./model')
 const EMR = require('../emr/model')
+const handlingModel = require('../handling/model')
 const res = require('express/lib/response')
+
 module.exports ={
     index: async(req,res) => {
         try {
@@ -60,7 +62,14 @@ module.exports ={
         try {
             const {therapistName,therapistAge,therapistGender,therapistpPhoneNumber,handled} = req.body
             let therapist = await Therapist({therapistName,therapistAge,therapistGender,therapistpPhoneNumber,handled})
+
+            let handling = await handlingModel.insertMany({
+                // name: therapist.therapistName,
+                therapists: therapist._id,
+                // handleds : therapist.handled
+            })
             await therapist.save();
+            console.log(handling)
             req.flash('alertMessage',"added successfully")
             req.flash('alertStatus', "success")
             console.log('Berhasil')

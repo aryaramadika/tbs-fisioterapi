@@ -1,6 +1,7 @@
 const EMR = require('./model')
 const Therapist = require('../therapist/model')
 const Intervensi = require('../intervensi/model')
+const handlingModel = require('../handling/model')
 module.exports ={
     index: async(req,res) => {
         try {
@@ -12,7 +13,6 @@ module.exports ={
             .populate('therapist')
             console.log('alert >>>')
             console.log(emr)
-            // EMR.count({therapist: _id})
 
             res.render('admin/emr/view_emr',{
                 emr,
@@ -74,6 +74,16 @@ module.exports ={
             console.log(handled)    
             console.log("--------handled-------")
             console.log(req.body)
+            let handling = await handlingModel.insertMany({
+                emrs: emr._id,
+                therapists: emr.therapist
+            })
+            therapist = await Therapist.findByIdAndUpdate(
+                {_id: emr.therapist},
+                {$inc:{handled: +1}}
+            )
+            console.log("--------handling-------")
+            console.log(handling)
             console.log(emr)    
             await emr.save();
             console.log(date)
@@ -127,6 +137,19 @@ module.exports ={
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
                 intervensi4,intervensi5,intervensi6,intervensi7,therapist,date})
+
+                // console.log("--------emr id-------")
+                // console.log(emr._id)
+                
+                // console.log("--------terapist id-------")
+                // console.log(emr.therapist)
+    
+                // let handling = await handlingModel.insertMany({
+                //     emrs: emr._id,
+                //     therapists: emr.therapist
+                // })
+                // console.log("--------handling-------")
+                // console.log(handling)    
             req.flash('alertMessage',"edit successfully")
             req.flash('alertStatus', "success")
             res.redirect('/emr')

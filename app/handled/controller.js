@@ -85,14 +85,14 @@ module.exports = {
         const{id}= req.params;
 
         let handled = await Handled({therapist,emr,quantityHandled})
-        handled(
-          { _id:"$therapist" },
-          { $push: { quantityHandled:{$sum:1} } }
-       )
+      //   handled(
+      //     { _id:"$therapist" },
+      //     { $push: { quantityHandled:{$sum:1} } }
+      //  )
         await handled.save()
-        await Handled.findByIdAndUpdate({
-          _id:therapist
-        },{therapist,emr,quantityHandled} )
+        // await Handled.findByIdAndUpdate({
+        //   _id:therapist
+        // },{therapist,emr,quantityHandled} )
       
         
 

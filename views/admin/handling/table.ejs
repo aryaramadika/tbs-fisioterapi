@@ -1,0 +1,41 @@
+
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>No.</th>
+      <th>Id Therapist</th>
+      <th>Id Patient </th>
+      <th>Jumlah Patient </th>
+      <th>Jumlah Bonus</th>
+     
+
+    </tr>
+    </thead>
+    <tbody>
+      <% for (let i = 0; i <handling.length; i++ ) {%>
+        <tr>
+          <td>
+            <%= i + 1 %>
+            
+          </td>
+          <td>
+            <%= handling[i].therapists%>
+          </td>
+          <td><%= handling[i]?.therapist?.therapistName?? '-' %> </td>
+          
+          
+            
+
+          <td></td>
+          <td></td>
+       
+          
+        </tr>
+        <% } %> 
+ 
+      
+      
+    </tbody>
+
+  </table>                
+  
