@@ -1,0 +1,32 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+  <tr>
+    <th>No.</th>
+    <th>Nama Treatment</th>
+    <th>Id Antrean</th>
+    <th>Harga</th>
+    <th>Aksi</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% for(let i = 0; i < treatment.length; i++){ %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= treatment[i].treatmentType %></td>
+        <td><%= treatment[i].queue%></td>
+        <td><%= treatment[i].price %></td>
+        <td>
+          <form action="/treatment/delete/<%= treatment[i]._id%>?_method=DELETE" method="POST">
+            <a href="/treatment/edit/<%= treatment[i]._id %>"class="btn btn-outline-info btn-sm">
+              <i class="fas fa-edit"></i>
+                Edit
+            </a>
+            <button class="btn btn-outline-warning btn-sm"><i class="far fa-eye"></i>View</button>
+            <button class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i>Delete</button>
+          </form>
+        </td>
+        
+      </tr>
+    <% } %>
+  </tbody>
+</table>

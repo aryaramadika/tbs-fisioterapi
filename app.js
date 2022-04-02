@@ -18,6 +18,13 @@ const recommendationRouter = require('./app/recommendation/route');
 const queueRouter = require('./app/queue/router');
 const handledRouter = require('./app/handled/router');
 const handlingRouter = require('./app/handling/route');
+const bankRouter = require('./app/bank/route');
+const paymentRouter = require('./app/payment/router');
+const transactionRouter = require('./app/transaction/router');
+const treatmentRouter = require('./app/treatment/route');
+
+
+
 
 
 
@@ -57,6 +64,15 @@ app.use('/recommendation', recommendationRouter);
 app.use('/queue', queueRouter);
 app.use('/handled', handledRouter);
 app.use('/handling', handlingRouter);
+app.use('/bank', bankRouter);
+app.use('/payment', paymentRouter);
+app.use('/transaction', transactionRouter);
+app.use('/treatment', treatmentRouter);
+
+
+
+
+
 
 
 
