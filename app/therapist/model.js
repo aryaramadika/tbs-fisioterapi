@@ -26,6 +26,16 @@ const therapistScheme = mongoose.Schema({
         default: 0
 
     },
+    bonus :{
+        type: Number,
+        default:0
+    },
+    thumbnail: {
+        type: String
+      },
+      description:{
+          type: String
+      }
     // status: {
     //     type: String,
     //     enum: ['Y', 'N'],

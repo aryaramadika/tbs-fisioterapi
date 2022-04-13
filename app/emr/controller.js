@@ -80,7 +80,9 @@ module.exports ={
             })
             therapist = await Therapist.findByIdAndUpdate(
                 {_id: emr.therapist},
-                {$inc:{handled: +1}}
+                {$inc:{handled: +1}},
+                
+
             )
             console.log("--------handling-------")
             console.log(handling)

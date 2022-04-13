@@ -8,7 +8,7 @@ module.exports = {
 
       const alert = { message: alertMessage, status: alertStatus }
       const transaction = await Transaction.find()
-      console.log(transaction)
+      // console.log(transaction)
       res.render('admin/transaction/view_transaction', {
         transaction,
         alert,

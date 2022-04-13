@@ -3,6 +3,7 @@
     <tr>
       <th>No.</th>
       <th>Jenis Treatment</th>
+      <th>Payment Type</th>
       <th>Total harga</th>
       <th>Status</th>
       <th>Nama Patient</th>
@@ -17,13 +18,13 @@
         </td>
 
         <td>
-          <%= transaction[i]?.historyTreatment?.queue %>
-            <br>
-            <%= transaction[i]?.historyVoucherTopup?.treatment %>
+          <%= transaction[i]?.historyTreatment?.treatment %>
+          
         </td>
+        <td><%= transaction[i]?.historyPayments?.bankName %></td>
 
         <td>
-          <%= transaction[i].value %>
+          <%= transaction[i].total %>
         </td>
 
 
@@ -44,7 +45,7 @@
         </td>
 
         <td>
-          <%= transaction[i].patient %>
+          <%= transaction[i].name %>
         </td>
 
         <td>

@@ -1,7 +1,11 @@
 const Treatment = require('./model')
 const queModel = require('../queue/model')
-// const fs = require('fs')
-// const config = require('../../config')
+const Bank = require('../bank/model')
+const Payment = require('../payment/model')
+const Transaction = require('../transaction/model')
+const fs = require('fs')
+const config = require('../../config')
+const { name } = require('ejs')
 
 module.exports = {
   index: async (req, res) => {
@@ -68,124 +72,66 @@ module.exports = {
     }
 },
 
-//   viewEdit: async (req, res) => {
-//     try {
-//       const { id } = req.params
-//       const category = await Category.find()
-//       const nominal = await Nominal.find()
-//       const voucher = await Voucher.findOne({ _id: id })
-//         .populate('category')
-//         .populate('nominals')
+viewEdit : async(req, res)=>{
+  try {
+    const { id } = req.params
+    
+    const treatment = await Treatment.findOne({_id : id})
 
-//       res.render('admin/voucher/edit', {
-//         voucher,
-//         nominal,
-//         category,
-//         name: req.session.user.name,
-//         title: 'Halaman ubah voucher'
-//       })
+    res.render('admin/treatment/edit', {
+      treatment,
+      name: req.session.user.name,
+      title: 'Halaman ubah treatment'
+    })
+    
+  } catch (err) {
+    req.flash('alertMessage', `${err.message}`)
+    req.flash('alertStatus', 'danger')
+    res.redirect('/treatment')
+  }
+},
 
-//     } catch (err) {
-//       req.flash('alertMessage', `${err.message}`)
-//       req.flash('alertStatus', 'danger')
-//       res.redirect('/voucher')
-//     }
-//   },
+actionEdit: async(req, res)=>{
+  try {
+    const { id } = req.params;
+    const { treatmentType, price } = req.body
 
-//   actionEdit: async (req, res) => {
-//     try {
-//       const { id } = req.params
-//       const { name, category, nominals } = req.body
+    await Treatment.findOneAndUpdate({
+      _id: id
+    },{ treatmentType,price });
 
-//       if(req.file){
-//         let tmp_path= req.file.path;
-//         let originaExt = req.file.originalname.split('.')[req.file.originalname.split('.').length - 1];
-//         let filename = req.file.filename + '.' + originaExt;
-//         let target_path = path.resolve(config.rootPath, `public/uploads/${filename}`)
+    req.flash('alertMessage', "Berhasil ubah treatment")
+    req.flash('alertStatus', "success")
 
-//         const src = fs.createReadStream(tmp_path)
-//         const dest = fs.createWriteStream(target_path)
+    res.redirect('/treatment')
+    
+  } catch (err) {
+    req.flash('alertMessage', `${err.message}`)
+    req.flash('alertStatus', 'danger')
+    res.redirect('/treatment')
+  }
+},
 
-//         src.pipe(dest)
+actionDelete : async(req,res) =>{
+  try {
+      const{id}= req.params;
 
-//         src.on('end', async ()=>{
-//           try {
+      await Treatment.findOneAndRemove({
+          _id:id
+      })
+      req.flash('alertMessage',"delete successfully")
+      req.flash('alertStatus', "success")
+      res.redirect('/treatment')
 
-//             const voucher = await Voucher.findOne({_id: id})
-
-//             let currentImage = `${config.rootPath}/public/uploads/${voucher.thumbnial}`;
-//             if(fs.existsSync(currentImage)){
-//               fs.unlinkSync(currentImage)
-//             }
-
-//             await Voucher.findOneAndUpdate({
-//               _id : id
-//             },{
-//               name,
-//               category,
-//               nominals,
-//               thumbnial: filename
-//             })
-            
-
-//             req.flash('alertMessage', "Berhasil ubah voucher")
-//             req.flash('alertStatus', "success")
-      
-//             res.redirect('/voucher')
-            
-//           } catch (err) {
-//             req.flash('alertMessage', `${err.message}`)
-//             req.flash('alertStatus', 'danger')
-//             res.redirect('/voucher')
-//           }
-//         })
-//       }else{
-//         await Voucher.findOneAndUpdate({
-//           _id : id
-//         },{
-//           name,
-//           category,
-//           nominals,
-//         })
-        
-//         req.flash('alertMessage', "Berhasil ubah voucher")
-//         req.flash('alertStatus', "success")
-  
-//         res.redirect('/voucher')
-//       }
-
-//     } catch (err) {
-//       req.flash('alertMessage', `${err.message}`)
-//       req.flash('alertStatus', 'danger')
-//       res.redirect('/nominal')
-//     }
-//   },
-
-//   actionDelete: async (req, res) => {
-//     try {
-//       const { id } = req.params;
-
-//       const voucher = await Voucher.findOneAndRemove({
-//         _id: id
-//       });
-
-//       let currentImage = `${config.rootPath}/public/uploads/${voucher.thumbnial}`;
-//       if(fs.existsSync(currentImage)){
-//         fs.unlinkSync(currentImage)
-//       }
+  } catch (err) {
+      req.flash('alertMessage', `${err.message}`)
+      req.flash('alertStatus', 'danger')
+      res.redirect('/treatment')
+  }
+},
 
 
-//       req.flash('alertMessage', "Berhasil hapus voucher")
-//       req.flash('alertStatus', "success")
-
-//       res.redirect('/voucher')
-
-//     } catch (err) {
-//       req.flash('alertMessage', `${err.message}`)
-//       req.flash('alertStatus', 'danger')
-//       res.redirect('/voucher')
-//     }
-//   },
+}
 
 //   actionStatus : async (req, res)=>{
 //     try {
@@ -211,4 +157,3 @@ module.exports = {
 //     }
 //   }
 
-}

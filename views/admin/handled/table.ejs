@@ -6,6 +6,7 @@
       <th>ID Therapist</th>
       <th>Nama Therapist</th>
       <th>Jumlah Patient </th>
+      <th>Bonuses</th>
       <th>Action</th>
 
     </tr>
@@ -17,13 +18,16 @@
             <%= i + 1 %>
             
           </td>
-          <td><%= handled[i].therapist._id %> </td>
+          <td><%= handled[i].therapist?._id?? '-' %> </td>
           <td><%= handled[i].therapist?.therapistName??'-' %> </td>
           <!-- <td><%= handled[i].emr?.name??'-' %></td>
           
             <td><%= handled[i].quantityHandled  %></td> -->
-
           <td><%= handled[i].therapist?.handled??'-' %></td>
+          <td><%= handled[i].therapist.bonus =  handled[i].therapist.handled*150000*(10/100) %></td>
+
+          
+
           <!-- <td></td> -->
           
        

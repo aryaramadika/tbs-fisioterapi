@@ -32,6 +32,10 @@ let transactionSchema = mongoose.Schema({
     type : Number,
     default: 0,
   },
+  total : {
+    type : Number,
+    default : 0
+  },
 
   value : {
     type : Number,
@@ -44,10 +48,16 @@ let transactionSchema = mongoose.Schema({
     default: 'pending'
   },
 
-  patient  : {
-    type: mongoose.Schema.Types.ObjectId,
+  patient  : 
+  [{type: mongoose.Schema.Types.ObjectId,
     ref: 'Patient'
-  },
+  }],
+  treatment  : 
+  [{type: mongoose.Schema.Types.ObjectId,
+    ref: 'Treatment'
+  }],
+    
+
 
   historyUser  : {
     name : { type : String, require: [true, 'nama player harus diisi.']},
@@ -67,6 +77,10 @@ let transactionSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  adminFee: {
+    type : Number,
+    default : 0
+  }
 
   
 }, { timestamps: true })

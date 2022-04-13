@@ -32,7 +32,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="/therapist/create" method="POST">
+                <form action="/therapist/create" method="POST" enctype="multipart/form-data">
                   <div class="card-body">
                     <div class="form-group">
                       <label for="name">Name</label>
@@ -54,7 +54,13 @@
                     <div class="form-group">
                         <label for="name">Phnoe Number</label>
                         <input type="name" name="therapistpPhoneNumber" class="form-control" id="exampleInputEmail1" placeholder="Enter phone number" required>
-                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="image">Image</label>
+                      <input type="file" name="image" class="form-control" id="image" placeholder="Enter Image" required>
+                      <br >
+                      <img src="" id="perview"> 
+                    </div>
 
                   
                   
@@ -104,3 +110,23 @@
 
 <%- include ../../partials/footer.ejs%>
 <%- include ../../partials/js.ejs%>
+
+<script>
+  function readURL (input){
+    if(input.files && input.files[0]){
+      const reader = new FileReader();
+
+      reader.onload = function(e){
+        $('#perview').attr('src', e.target.result);
+        $('#perview').attr('width', '20%');
+        $('#perview').attr('height', '20%');
+      }
+
+      reader.readAsDataURL(input.files[0])
+    }
+  }
+
+  $('#image').change(function(){
+    readURL(this)
+  })
+</script>

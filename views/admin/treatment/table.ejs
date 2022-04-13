@@ -3,7 +3,7 @@
   <tr>
     <th>No.</th>
     <th>Nama Treatment</th>
-    <th>Id Antrean</th>
+    <!-- <th>Id Antrean</th> -->
     <th>Harga</th>
     <th>Aksi</th>
   </tr>
@@ -13,7 +13,7 @@
       <tr>
         <td><%= i + 1 %></td>
         <td><%= treatment[i].treatmentType %></td>
-        <td><%= treatment[i].queue%></td>
+        <!-- <td><%= treatment[i].queue%></td> -->
         <td><%= treatment[i].price %></td>
         <td>
           <form action="/treatment/delete/<%= treatment[i]._id%>?_method=DELETE" method="POST">

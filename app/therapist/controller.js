@@ -1,7 +1,11 @@
 const Therapist = require('./model')
 const EMR = require('../emr/model')
+const Treatment = require('../treatment/model')
 const handlingModel = require('../handling/model')
 const res = require('express/lib/response')
+const path = require('path')
+const fs = require('fs')
+const config = require('../../config')
 
 module.exports ={
     index: async(req,res) => {
@@ -13,13 +17,16 @@ module.exports ={
             const alert ={ message : alertMessage , status:alertStatus}
             const therapist = await Therapist.find({})
             .populate('emr')
+            .populate('treatment','price')
             const emr = await EMR.countDocuments()
             const emrss = await EMR.find({})
             const patientEMR = await EMR.aggregate([
                 {$group :{_id:{$toObjectId:"$_id}"}, therapist:{$sum:1}}}
               ])
         
-           
+              console.log('THERAPIST DATA')
+              console.log(therapist);
+
               console.log("EMR by therapist")
               console.log(patientEMR);
               const patienThe = await Therapist.aggregate([
@@ -61,19 +68,71 @@ module.exports ={
     actionCreate : async(req,res)=>{
         try {
             const {therapistName,therapistAge,therapistGender,therapistpPhoneNumber,handled} = req.body
-            let therapist = await Therapist({therapistName,therapistAge,therapistGender,therapistpPhoneNumber,handled})
+            if(req.file){
+                let tmp_path= req.file.path;
+                let originaExt = req.file.originalname.split('.')[req.file.originalname.split('.').length - 1];
+                let filename = req.file.filename + '.' + originaExt;
+                let target_path = path.resolve(config.rootPath, `public/uploads/${filename}`)
+        
+                const src = fs.createReadStream(tmp_path)
+                const dest = fs.createWriteStream(target_path)
+        
+                src.pipe(dest)
+        
+                src.on('end', async ()=>{
+                  try {
+        
+                    const therapist = new Therapist({
+                      therapistName,
+                      therapistAge,
+                      therapistGender,
+                      therapistpPhoneNumber,
+                      handled,
+                      thumbnail: filename
+                    })
+        
+                    await therapist.save();
+        
+                    req.flash('alertMessage', "Berhasil tambah therapist")
+                    req.flash('alertStatus', "success")
+              
+                    res.redirect('/therapist')
+                    
+                  } catch (err) {
+                    req.flash('alertMessage', `${err.message}`)
+                    req.flash('alertStatus', 'danger')
+                    res.redirect('/therapist')
+                  }
+                })
+              }else{
+                const therapist = new Therapist({
+                  name,
+                  category,
+                  nominals,
+                })
+        
+                await therapist.save();
+        
+                req.flash('alertMessage', "Berhasil tambah therapist")
+                req.flash('alertStatus', "success")
+          
+                res.redirect('/therapist')
+              }
 
-            let handling = await handlingModel.insertMany({
-                // name: therapist.therapistName,
-                therapists: therapist._id,
-                // handleds : therapist.handled
-            })
-            await therapist.save();
-            console.log(handling)
-            req.flash('alertMessage',"added successfully")
-            req.flash('alertStatus', "success")
-            console.log('Berhasil')
-            res.redirect('/therapist') 
+
+            
+            // let therapist = await Therapist({therapistName,therapistAge,therapistGender,therapistpPhoneNumber,handled})
+            // let handling = await handlingModel.insertMany({
+            //     // name: therapist.therapistName,
+            //     therapists: therapist._id,
+            //     // handleds : therapist.handled
+            // })
+            // await therapist.save();
+            // console.log(handling)
+            // req.flash('alertMessage',"added successfully")
+            // req.flash('alertStatus', "success")
+            // console.log('Berhasil')
+            // res.redirect('/therapist') 
         } catch (error) {
             req.flash('alertMessage', `${err.message}`)
             req.flash('alertStatus', 'danger')

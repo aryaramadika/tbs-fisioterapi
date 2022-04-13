@@ -13,7 +13,11 @@ treatmentType: {
 price: {
   type: Number,
   require: [true, 'Nama bank harus diisi']
-  },
+},
+user : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+}, 
 
 
 }, { timestamps: true })

@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 
 const session = require('express-session')
 const flash = require('connect-flash');
-
+var cors = require('cors')
+ 
 const methodOverride = require('method-override') 
 const dashboardRouter = require('./app/dashboard/route');
 const emrRouter = require('./app/emr/router');
@@ -22,20 +23,19 @@ const bankRouter = require('./app/bank/route');
 const paymentRouter = require('./app/payment/router');
 const transactionRouter = require('./app/transaction/router');
 const treatmentRouter = require('./app/treatment/route');
-
-
-
-
-
-
-
-
+const patientRouter = require('./app/patient/route');
+const authRouter = require('./app/auth/router');
 
 
 
 
 
 var app = express();
+
+const URL = `/api/v1`
+app.use(cors())
+
+
 app.use(flash());
 app.use(session({
   secret: 'keyboard cat',
@@ -72,6 +72,9 @@ app.use('/treatment', treatmentRouter);
 
 
 
+// API 
+app.use(`${URL}/patients`, patientRouter);
+app.use(`${URL}/auth`, authRouter);
 
 
 

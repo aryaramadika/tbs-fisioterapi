@@ -1,8 +1,10 @@
-// const config = require('../../config')
-// const jwt = require('jsonwebtoken')
+const config = require('../../config')
+const jwt = require('jsonwebtoken')
 const user = require('../users/model')
 var express = require('express');
 var router = express.Router();
+const Patient = require('../patient/model')
+
 
 module.exports = {
   isLoginAdmin: (req, res, next) => {
@@ -17,26 +19,26 @@ module.exports = {
 
 
 
-  // isLoginPlayer : async(req, res, next) =>{ 
-  //   try {
-  //     const token = req.headers.authorization ? req.headers.authorization.replace('Bearer ', '') : null;
+  isLoginPatient : async(req, res, next) =>{ 
+    try {
+      const token = req.headers.authorization ? req.headers.authorization.replace('Bearer ', '') : null;
 
-  //     const data = jwt.verify(token, config.jwtKey)
+      const data = jwt.verify(token, config.jwtKey)
 
-  //     const player = await Player.findOne({_id : data.player.id})
+      const patient = await Patient.findOne({_id : data.patient.id})
 
-  //     if(!player){
-  //       throw new Error()
-  //     }
+      if(!patient){
+        throw new Error()
+      }
 
-  //     req.player =  player
-  //     req.token =  token
-  //     next()
-  //   } catch (err) {
-  //     res.status(401).json({
-  //       error:  'Not authorized to acces this resource'
-  //     })
-  //   }
+      req.patient =  patient
+      req.token =  token
+      next()
+    } catch (err) {
+      res.status(401).json({
+        error:  'Not authorized to acces this resource'
+      })
+    }
 
-  // }
+  }
 }

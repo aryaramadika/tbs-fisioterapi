@@ -29,6 +29,13 @@ const queScheme = mongoose.Schema({
         enum : ['ongoing' , 'treated', 'pending'],
         default : 'pending'
     },
+    time:{
+        type: Date,
+        require : [true , 'You must choose date treatment']
+    },
+    patient:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Patient'    }
         
     
 },{ timestamps: true })

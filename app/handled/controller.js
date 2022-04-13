@@ -1,6 +1,8 @@
 const Handled = require('./model')
 const EMR = require('../emr/model')
 const Therapist = require('../therapist/model')
+const Treatment = require('../treatment/model')
+
 
 module.exports = {
   index: async (req, res) => {
@@ -8,9 +10,13 @@ module.exports = {
       const alertMessage = req.flash("alertMessage")
       const alertStatus = req.flash("alertStatus")
       const emrs = await EMR.find()
+      const treatment = await Treatment.find()
       const therapist = await Therapist.find()
       const alert = { message: alertMessage, status: alertStatus }
-      const handled = await Handled.find().populate('therapist').populate('emr')
+      const handled = await Handled.find()
+      .populate('therapist')
+      .populate('emr')
+      .populate('treatment', '_id price')
       console.log(EMR)
       // let criteria = {}
       // if (req.therapist._id) {
@@ -81,10 +87,14 @@ module.exports = {
   },
   handledChecker: async(req,res) =>{
       try {
-        const {therapist,emr,quantityHandled } = req.body 
-        const{id}= req.params;
+        const {therapist,emr,quantityHandled,bonus,treatment } = req.body 
+        // const{id}= req.params;
+        const res_treatment = await Treatment.findOne({ _id : treatment})
+        const res_therapist = await Therapist.findOne({ _id : therapist})
 
-        let handled = await Handled({therapist,emr,quantityHandled})
+        // bonus = (10/100)*150000*res_therapist.quantityHandled 
+        
+        let handled = await Handled({therapist,emr,quantityHandled,bonus})
       //   handled(
       //     { _id:"$therapist" },
       //     { $push: { quantityHandled:{$sum:1} } }

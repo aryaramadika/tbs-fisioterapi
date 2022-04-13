@@ -5,6 +5,9 @@ let handledSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Therapist'
   },
+  bonus:{
+    type : Number
+  }
   // emr : {
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: 'EMR'

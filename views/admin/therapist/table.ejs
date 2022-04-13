@@ -22,7 +22,15 @@
             <%= i + 1 %>
             
           </td>
-          <td><%= therapist[i].therapistName %> </td>
+          <td>
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <img width="48px" height="48px"
+                  src="https://localhost:2000/uploads/<%= therapist[i].thumbnail %>"
+                  alt="thumbnail">
+              </li>
+            </ul>
+            <%= therapist[i].therapistName %> </td>
           <td><%= therapist[i].therapistAge %></td>
           <td><%= therapist[i].therapistGender %></td>
           <td><%= therapist[i].therapistpPhoneNumber %></td>
