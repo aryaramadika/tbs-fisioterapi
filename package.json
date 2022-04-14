@@ -6,7 +6,6 @@
     "start": "node ./bin/www",
     "dev": "env-cmd -f ./.env.local nodemon ./bin/www",
     "pro": "env-cmd -f ./.env nodemon ./bin/www"
-
   },
   "dependencies": {
     "admin-lte": "^3.1.0",
