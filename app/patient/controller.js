@@ -299,6 +299,23 @@ module.exports = {
           })
         }
       }
-    }
+    },
+    detailPriceTreatmentPage: async(req, res) => {
+      try {
+          const { id } = req.params
+          const treatment = await Treatment.findOne({_id: id})
+          // .populate('user')
+          .select('_id treatmentType price')
+
+          if(!treatment){
+              return res.status(404).json({message : "therapist staff not found"})
+          }
+          res.status(200).json({data: treatment})
+
+      } catch (err) {
+          res.status(500).json({message: err.message || `Internal Server Error`})
+
+      }
+  },
 
 }
