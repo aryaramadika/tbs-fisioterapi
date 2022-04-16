@@ -25,7 +25,7 @@ module.exports = {
             const { id } = req.params
             const therapist = await Therapist.findOne({_id: id})
             .populate('user')
-            .select('_id therapistName therapistAge description therapistGender')
+            .select('_id therapistName therapistAge description therapistGender thumbnail')
 
             if(!therapist){
                 return res.status(404).json({message : "therapist staff not found"})
