@@ -9,7 +9,7 @@ const os = require('os')
 // router.use(isLoginAdmin)
 router.get('/landingpage', landingPage);
 router.get('/:id/detail/', detaiTherapistPage);
-router.get('/:id/pricedetail/', detailPriceTreatmentPage);
+router.get('/pricedetail', detailPriceTreatmentPage);
 router.get('/:id/treatmentdetail/', treatmentDetail);
 router.post('/book',isLoginPatient, book);
 router.get('/history',isLoginPatient, history);

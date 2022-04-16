@@ -302,8 +302,8 @@ module.exports = {
     },
     detailPriceTreatmentPage: async(req, res) => {
       try {
-          const { id } = req.params
-          const treatment = await Treatment.findOne({_id: id})
+          // const { id } = req.params
+          const treatment = await Treatment.find()
           // .populate('user')
           .select('_id treatmentType price')
 
