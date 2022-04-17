@@ -37,7 +37,10 @@ let patientSchema = mongoose.Schema({
     default: 'Y'
   },
   phoneNumber:{
-    type: Number
+    type: String,
+    require: [true, 'nomor telpon harus diisi'],
+    maxlength :[13, "panjang nomor telpon harus antara 9 - 13 karakter"],
+    minlength :[9, "panjang nomor telpon harus antara 9 - 13 karakter"]
   },
   avatar: {type : String},
   fileName : {type : String},
