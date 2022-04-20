@@ -21,6 +21,10 @@ const recommendationSchema = mongoose.Schema({
     therapist:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Therapist'
+    },
+    patient:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Patient'
     }
              
 },{ timestamps: true })
