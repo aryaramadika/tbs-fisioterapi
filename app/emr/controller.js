@@ -34,13 +34,13 @@ module.exports ={
         try {
             const therapist = await Therapist.find()
             const intervensi = await Intervensi.find()
-            const que = await Queue.find()
+            const queue = await Queue.find()
 
             
             res.render('admin/emr/create',{
                 therapist,
                 intervensi,
-                que,
+                queue,
                 name: req.session.user.name,
                 title: 'Add EMR Page'
             })
