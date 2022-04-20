@@ -35,6 +35,16 @@
                 <form action="/emr/create" method="POST">
                   <div class="card-body">
                     <div class="form-group">
+                      <label>Antrean ID</label>
+                      <select class="form-control select2" style="width: 100%;" name="que" required>
+                        <option selected="selected">Choose queue</option>
+                        <% queue.forEach(queue=>{ %>
+                          <option value="<%= queue._id %>"><%= queue.name %></option>
+                        <% }) %>
+                        
+                      </select>
+                    </div>
+                    <div class="form-group">
                       <label for="name">Examination Date</label>
                       <input type="date" name="date" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" required>
                     </div>

@@ -1,6 +1,8 @@
 const EMR = require('./model')
 const Therapist = require('../therapist/model')
 const Intervensi = require('../intervensi/model')
+const Queue = require('../queue/model')
+
 const handlingModel = require('../handling/model')
 module.exports ={
     index: async(req,res) => {
@@ -10,6 +12,7 @@ module.exports ={
 
             const alert ={ message : alertMessage , status:alertStatus}
             const emr = await EMR.find()
+            .populate('queue')
             .populate('therapist')
             console.log('alert >>>')
             console.log(emr)
@@ -31,9 +34,13 @@ module.exports ={
         try {
             const therapist = await Therapist.find()
             const intervensi = await Intervensi.find()
+            const que = await Queue.find()
+
+            
             res.render('admin/emr/create',{
                 therapist,
                 intervensi,
+                que,
                 name: req.session.user.name,
                 title: 'Add EMR Page'
             })
@@ -53,7 +60,7 @@ module.exports ={
                 medHistory,vitalExam,inspection,palpation,
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
-                intervensi4,intervensi5,intervensi6,intervensi7,therapist,date,handled
+                intervensi4,intervensi5,intervensi6,intervensi7,therapist,date,handled,patient,que
                  } = req.body
             let emr = await EMR({name,age,gender,address,job,
                 hospitalData,primaryComplain,famHistory,
@@ -61,7 +68,7 @@ module.exports ={
                 percussion,auscultation,functionCheck,specificInspect,
                 diagnosis,plan,intervensi1,intervensi2,intervensi3,
                 intervensi4,intervensi5,intervensi6,intervensi7,therapist,
-                date })
+                date,patient,que })
             // if(emr !== null ){
             //     for(let i; i < emr.length;i++){
             //         if(emr._id === therapist._id){

@@ -88,6 +88,10 @@ const emrScheme = mongoose.Schema({
     patient:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient'  
+    },
+    que:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Que'
     }
         
     
