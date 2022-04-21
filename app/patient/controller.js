@@ -58,7 +58,7 @@ module.exports = {
     paymentMethod: async(req, res) => {
       try {
           const { id } = req.params
-          const payment = await Payment.findOne({_id: id})
+          const payment = await Payment.find()
           .populate('user','_id name phoneNumber')
           .populate('banks')
           .select('_id type banks bankName')

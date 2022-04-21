@@ -11,7 +11,7 @@ router.get('/landingpage', landingPage);
 router.get('/:id/detail/', detaiTherapistPage);
 router.get('/pricedetail', detailPriceTreatmentPage);
 router.get('/:id/treatmentdetail/', treatmentDetail);
-router.get('/:id/paymentMethod/', paymentMethod);
+router.get('/paymentMethod/', paymentMethod);
 router.post('/book',isLoginPatient, book);
 router.post('/ques',isLoginPatient, ques);
 router.get('/history',isLoginPatient, history);
