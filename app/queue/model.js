@@ -21,6 +21,10 @@ const queScheme = mongoose.Schema({
         require :[true , 'You must enter job']
 
     },
+    lementation:{
+        type: String,
+        require :[true , 'You must enter lementation']
+    },
     // date:{
     //     type: Date
     // },
@@ -35,7 +39,13 @@ const queScheme = mongoose.Schema({
     },
     patient:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Patient'    }
+        ref: 'Patient'    
+    },
+    treatment  : 
+    [{
+        type: String,
+        // ref: 'Treatment'
+    }],
         
     
 },{ timestamps: true })

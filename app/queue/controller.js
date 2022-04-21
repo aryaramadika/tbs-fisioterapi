@@ -35,8 +35,8 @@ module.exports ={
     },
     actionCreate : async(req,res)=>{
         try {
-            const {name,age,gender,phoneNumber} = req.body
-            let queue = await Queue({name,age,gender,phoneNumber})
+            const {name,age,gender,phoneNumber,lementation} = req.body
+            let queue = await Queue({name,age,gender,phoneNumber,lementation})
             await queue.save();
             req.flash('alertMessage',"added successfully")
             req.flash('alertStatus', "success")

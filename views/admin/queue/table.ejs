@@ -6,6 +6,7 @@
     <th>Age</th>
     <th>Gender</th>
     <th>Phone Number</th>
+    <th>Lementation</th>
     <th>Status</th>
     <th>Action</th>
 
@@ -25,6 +26,8 @@
         <td><%= queue[i].age %></td>
         <td><%= queue[i].gender %></td>
         <td><%= queue[i].phoneNumber %></td>
+        <td><%= queue[i].lementation %></td>
+
         <td>
           <% if(queue[i].status==='ongoing' ) { %>
             <span class="badge badge-warning">

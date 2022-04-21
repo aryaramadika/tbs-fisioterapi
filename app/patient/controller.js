@@ -4,6 +4,7 @@ const Treatment = require('../treatment/model')
 const Bank = require('../bank/model')
 const Payment = require('../payment/model')
 const Transaction = require('../transaction/model')
+const Queue = require('../queue/model')
 const fs = require('fs')
 const config = require('../../config')
 
@@ -54,16 +55,49 @@ module.exports = {
 
         }
     },
+    ques: async(req,res)=>{
+        try {
+          const {accountUser, name, treatment, phoneNumber,lementation,age,gender} = req.body
+          const res_treatment = await Treatment.findOne({ _id : treatment})
+          .select('treatmentType _id user')
+          .populate('user')
+
+          if (!res_treatment) return res.status(404).json({ message: 'treatment not found' })
+          const payload ={
+            name: name,
+            phoneNumber:phoneNumber,
+            patient: req.patient._id,
+            treatment: res_treatment._doc.treatmentType,
+            lementation:lementation,
+            gender:gender,
+            age:age,
+            accountUser: accountUser,
+            user: res_treatment._doc.user?._id
+          }
+          const que = new Queue(payload)
+          await que.save(que)
+          res.status(201).json({
+            data: que
+          })
+
+        } catch (err) {
+          res.status(500).json({
+            message: err.message || 'Internal Server Error' 
+          })
+        }
+
+
+    },
     book : async(req, res) => {
 
         try {
-          const {accountUser, name, treatment, payment, bank} = req.body
+          const {accountUser, name, treatment, payment, bank, phoneNumber,lementation,age,gender} = req.body
       
           const res_treatment = await Treatment.findOne({ _id : treatment})
           .select('treatmentType _id price user')
           .populate('user')
         
-          if (!res_treatment) return res.status(404).json({ message: 'treatmen not found' })
+          if (!res_treatment) return res.status(404).json({ message: 'treatment not found' })
         
           const res_payment = await Payment.findOne({ _id: payment })
         
@@ -92,6 +126,10 @@ module.exports = {
             },
             name: name,
             accountUser: accountUser,
+            lementation:lementation,
+            phoneNumber:phoneNumber,
+            gender:gender,
+            age:age,
             adminFee: adminFee,
             total: total,
             patient: req.patient._id,
@@ -103,6 +141,8 @@ module.exports = {
           }
 
           const transaction = new Transaction(payload)
+          const que = new Queue(payload)
+          await que.save(que)
           await transaction.save(transaction)
           
           res.status(201).json({
