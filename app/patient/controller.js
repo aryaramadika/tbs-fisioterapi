@@ -60,8 +60,8 @@ module.exports = {
           const { id } = req.params
           const payment = await Payment.findOne({_id: id})
           .populate('user','_id name phoneNumber')
-          // .populate('payment')
-          .select('_id type banks')
+          .populate('banks')
+          .select('_id type banks bankName')
 
           if(!payment){
               return res.status(404).json({message : "therapist staff not found"})
