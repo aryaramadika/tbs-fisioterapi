@@ -42,10 +42,10 @@ const queScheme = mongoose.Schema({
         ref: 'Patient'    
     },
     treatment  : 
-    [{
-        type: String,
-        // ref: 'Treatment'
-    }],
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Treatment'
+    },
         
     
 },{ timestamps: true })

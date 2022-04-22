@@ -2,8 +2,12 @@ const mongoose = require('mongoose')
 
 let transactionSchema = mongoose.Schema({
   historyTreatment :{
-    queue : { type : String, require: [true, 'nama antrean harus diisi.']},
-    treatment : { type : String, require: [true, 'Treatment harus diisi.']},
+    name : { type : String, require: [true, 'nama antrean harus diisi.']},
+    age : { type : Number, require: [true, 'umur antrean harus diisi.']},
+    phoneNumber : { type : String, require: [true, 'Nomer telepon  harus diisi.']},
+    lementation : { type : String, require: [true, 'nama antrean harus diisi.']},
+    gender : { type : String, require: [true, 'nama antrean harus diisi.']},
+    treatmentType : { type : String, require: [true, 'Treatment harus diisi.']},
     price : { type : Number },
   },
 

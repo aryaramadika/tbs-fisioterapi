@@ -73,29 +73,89 @@ module.exports = {
 
       }
   },
+  reservationPage: async(req, res) => {
+    try {
+        const { id } = req.params
+        const que = await Queue.find()
+        // .populate('user','_id name phoneNumber')
+        // .populate('banks')
+        .populate('treatment')
+        .populate('user','_id name phoneNumber')
+        .select('_id name age phoneNumber lementation')
+
+        if(!que){
+            return res.status(404).json({message : "treatment staff not found"})
+        }
+        res.status(200).json({data: que})
+
+    } catch (err) {
+        res.status(500).json({message: err.message || `Internal Server Error`})
+
+    }
+},
     ques: async(req,res)=>{
         try {
-          const {accountUser, name, treatment, phoneNumber,lementation,age,gender} = req.body
-          const res_treatment = await Treatment.findOne({ _id : treatment})
-          .select('treatmentType _id user')
+          const {accountUser, name, treatment, que, phoneNumber,lementation,age,bank,payment} = req.body
+          const res_que = await Queue.findOne({ _id : que})
+          .select('_id name age phoneNumber lementation')
+          .populate('treatment')
           .populate('user')
 
+          if (!res_que) return res.status(404).json({ message: 'que not found' })
+
+          const res_treatment = await Treatment.findOne({_id:treatment})
           if (!res_treatment) return res.status(404).json({ message: 'treatment not found' })
+        
+          const res_payment = await Payment.findOne({ _id: payment })
+        
+          if (!res_payment) return res.status(404).json({ message: 'payment not found' })
+        
+          const res_bank = await Bank.findOne({ _id: bank })
+        
+          if (!res_bank) return res.status(404).json({ message: 'bank not found' })
+
+          let adminFee = (1/100) * res_treatment._doc.price
+          let total = res_treatment._doc.price + adminFee
+          console.log(res_treatment)
           const payload ={
+            historyTreatment: {
+                name: res_que._doc.name,
+                age: res_que._doc.age,
+                phoneNumber: res_que._doc.phoneNumber,
+                lementation: res_que._doc.lementation,
+                treatmentType: res_treatment._doc.treatmentType ,
+                price: res_treatment._doc.price
+              },
+              historyPayments:{
+                name: res_bank._doc.name,
+                type: res_payment._doc.type,
+                bankName: res_bank._doc.bankName,
+                noRekening: res_bank._doc.noRekening,
+              },
             name: name,
             phoneNumber:phoneNumber,
             patient: req.patient._id,
-            treatment: res_treatment._doc.treatmentType,
+            // treatment: treatment,
+            // que:
             lementation:lementation,
-            gender:gender,
+            // gender:gender,
+            adminFee: adminFee,
+            total: total,
             age:age,
             accountUser: accountUser,
-            user: res_treatment._doc.user?._id
+            historyUser: {
+              name: res_que._doc.user?.name,
+              phoneNumber: res_que._doc.user?.phoneNumber
+            },
+            user: res_que._doc.user?._id
           }
-          const que = new Queue(payload)
-          await que.save(que)
+          const ques = new Queue(payload)
+          const transaction = new Transaction(payload)
+          await ques.save(ques)
+          await transaction.save(transaction)
+
           res.status(201).json({
-            data: que
+            data: transaction
           })
 
         } catch (err) {
@@ -164,7 +224,7 @@ module.exports = {
           await transaction.save(transaction)
           
           res.status(201).json({
-            data: transaction
+            data: transaction,
           })
       
         } catch (err) {
