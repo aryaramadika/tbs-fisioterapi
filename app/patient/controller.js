@@ -80,6 +80,7 @@ module.exports = {
         // .populate('user','_id name phoneNumber')
         // .populate('banks')
         .populate('treatment')
+        .populate('payment')
         .populate('user','_id name phoneNumber')
         .select('_id name age phoneNumber lementation')
 
