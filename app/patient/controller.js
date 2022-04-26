@@ -207,6 +207,7 @@ module.exports = {
             accountUser: accountUser,
             lementation:lementation,
             phoneNumber:phoneNumber,
+            treatment,
             gender:gender,
             age:age,
             adminFee: adminFee,

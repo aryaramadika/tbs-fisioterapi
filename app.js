@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var nodemailer = require('nodemailer')
+
+
 
 const session = require('express-session')
 const flash = require('connect-flash');

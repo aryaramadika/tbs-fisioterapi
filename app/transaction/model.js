@@ -57,9 +57,9 @@ let transactionSchema = mongoose.Schema({
     ref: 'Patient'
   }],
   treatment  : 
-  [{type: mongoose.Schema.Types.ObjectId,
+  {type: mongoose.Schema.Types.ObjectId,
     ref: 'Treatment'
-  }],
+  },
     
 
 
