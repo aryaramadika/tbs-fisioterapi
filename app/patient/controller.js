@@ -4,6 +4,8 @@ const Treatment = require('../treatment/model')
 const Bank = require('../bank/model')
 const Payment = require('../payment/model')
 const Transaction = require('../transaction/model')
+const Recommendation = require('../recommendation/model')
+const EMR = require('../emr/model')
 const Queue = require('../queue/model')
 const fs = require('fs')
 const config = require('../../config')
@@ -73,6 +75,42 @@ module.exports = {
 
       }
   },
+  emr: async(req, res) => {
+    try {
+        const { id } = req.params
+        const emr = await EMR.find({_id:id})
+        .populate('user','_id name phoneNumber')
+        // .populate('banks')
+        .select('_id name diagnosis plan')
+
+        if(!emr){
+            return res.status(404).json({message : "emr  not found"})
+        }
+        res.status(200).json({data: emr})
+
+    } catch (err) {
+        res.status(500).json({message: err.message || `Internal Server Error`})
+
+    }
+},
+  recommendation: async(req, res) => {
+    try {
+        const { id } = req.params
+        const recommendation = await Recommendation.find()
+        .populate('user','_id name phoneNumber')
+        .populate('emr')
+        .select('_id emr recommend date status')
+
+        if(!recommendation){
+            return res.status(404).json({message : "recommendation not found"})
+        }
+        res.status(200).json({data: recommendation})
+
+    } catch (err) {
+        res.status(500).json({message: err.message || `Internal Server Error`})
+
+    }
+},
   reservationPage: async(req, res) => {
     try {
         const { id } = req.params
@@ -318,7 +356,7 @@ module.exports = {
           .sort({ 'updatedAt': -1 })
 
           console.log(count.data)
-          res.status(200).json({ data: count })
+          res.status(200).json({ data: history })
 
         } catch (err) {
           res.status(500).json({ message: err.message || `Internal server error` })

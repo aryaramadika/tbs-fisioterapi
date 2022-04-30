@@ -88,24 +88,10 @@ module.exports = {
   handledChecker: async(req,res) =>{
       try {
         const {therapist,emr,quantityHandled,bonus,treatment } = req.body 
-        // const{id}= req.params;
-        const res_treatment = await Treatment.findOne({ _id : treatment})
-        const res_therapist = await Therapist.findOne({ _id : therapist})
-
-        // bonus = (10/100)*150000*res_therapist.quantityHandled 
-        
-        let handled = await Handled({therapist,emr,quantityHandled,bonus})
-      //   handled(
-      //     { _id:"$therapist" },
-      //     { $push: { quantityHandled:{$sum:1} } }
-      //  )
+     
+        let handled = await Handled({therapist,emr,quantityHandled,bonus})   
         await handled.save()
-        // await Handled.findByIdAndUpdate({
-        //   _id:therapist
-        // },{therapist,emr,quantityHandled} )
       
-        
-
         console.log("--------------------------------")
         console.log(quantityHandled)  
         console.log("--------------------------------")
@@ -114,7 +100,7 @@ module.exports = {
         console.log('Berhasil')
         res.redirect('/handled') 
       } catch (err) {
-        req.flash('alertMessage', `${err.message}`)
+        req.flash('alertMessage', "Please Enter the valid input")
         req.flash('alertStatus', 'danger')
         res.redirect('/handled')
         console.log('gagal')
