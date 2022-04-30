@@ -356,7 +356,7 @@ module.exports = {
           .sort({ 'updatedAt': -1 })
 
           console.log(count.data)
-          res.status(200).json({ data: history })
+          res.status(200).json({ data: count })
 
         } catch (err) {
           res.status(500).json({ message: err.message || `Internal server error` })
