@@ -232,7 +232,12 @@ module.exports = {
           const payload = {
             historyTreatment: {
             //   queue: res_treatment._doc.queue,
-              treatment: res_treatment._doc.treatmentType,
+              name,
+              age,
+              phoneNumber,
+              gender,
+              lementation,
+              treatmentType: res_treatment._doc.treatmentType,
               price: res_treatment._doc.price
             },
             historyPayments:{
