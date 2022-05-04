@@ -501,9 +501,18 @@ module.exports = {
       }
 
       const cpHistory = await EMR.find(criteria)
-      .select('primaryComplain diagnosis date')
+      let totalCP = await EMR.aggregate([
+        { $match: criteria },
+        {
+          $group: {
+            _id: null,
+          }
+        }
+      ])
+      // .select('primaryComplain diagnosis date')
       res.status(200).json({
-        data: cpHistory
+        data: cpHistory,
+        totalCP: totalCP.length ? totalCP[0].total : 0
       })
 
   } catch (err) {
