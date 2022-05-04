@@ -480,5 +480,72 @@ module.exports = {
 
       }
   },
+  checkupHistory: async(req, res) =>{
+    try {
+      const {primaryComplain, diagnosis, date} = req.body
+      const {status = ''} = req.query;
+      let criteria ={}
+
+      if(status.length){
+          criteria ={
+              ...criteria,
+              status:{$regex: `${status}`,$options:'i'}
+          }
+      }
+
+      if(req.patient_id){
+          criteria={
+              ...criteria,
+              patient: req.patient._id,
+          }
+      }
+
+      const cpHistory = await EMR.find(criteria)
+      .select('primaryComplain diagnosis date')
+      res.status(200).json({
+        data: cpHistory
+      })
+
+  } catch (err) {
+    res.status(500).json({
+      message: err.message || 'Internal Server Error' 
+    })
+  }
+},
+
+patientRecommendation: async(req, res) =>{
+  try {
+    const {primaryComplain, diagnosis, date} = req.body
+    const {status = ''} = req.query;
+    let criteria ={}
+
+    if(status.length){
+        criteria ={
+            ...criteria,
+            status:{$regex: `${status}`,$options:'i'}
+        }
+    }
+
+    if(req.patient_id){
+        criteria={
+            ...criteria,
+            patient: req.patient._id,
+        }
+    }
+
+    const viewRec = await Recommendation.find(criteria)
+    .select('recommend therapist date status')
+    res.status(200).json({
+      data: viewRec
+    })
+
+} catch (err) {
+  res.status(500).json({
+    message: err.message || 'Internal Server Error' 
+  })
+}
+}
+
+
 
 }

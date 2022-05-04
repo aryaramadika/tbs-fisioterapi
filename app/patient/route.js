@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const {landingPage, detaiTherapistPage, book, treatmentDetail,paymentMethod,history,historyDetail,dashboard,profile,editProfile, detailPriceTreatmentPage, ques, reservationPage,recommendation,emr } = require('./controller')
+const {landingPage, detaiTherapistPage, book, treatmentDetail,paymentMethod,history,historyDetail,
+  dashboard,profile,editProfile, 
+  detailPriceTreatmentPage, ques, reservationPage,recommendation,emr,checkupHistory,patientRecommendation} = require('./controller')
 
 const { isLoginPatient } = require('../middleware/auth')
 const multer = require('multer')
@@ -26,6 +28,8 @@ router.put('/profile',
   multer({ dest: os.tmpdir() }).single('image'),
   editProfile
 );
+router.get('/checkupHistory',checkupHistory);
+router.get('/patientRecommendation', patientRecommendation);
 
 
 
