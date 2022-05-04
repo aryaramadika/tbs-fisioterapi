@@ -514,37 +514,85 @@ module.exports = {
 },
 
 patientRecommendation: async(req, res) =>{
-  try {
-    const {primaryComplain, diagnosis, date} = req.body
-    const {status = ''} = req.query;
-    let criteria ={}
-
-    if(status.length){
-        criteria ={
-            ...criteria,
-            status:{$regex: `${status}`,$options:'i'}
-        }
-    }
-
-    if(req.patient_id){
-        criteria={
-            ...criteria,
-            patient: req.patient._id,
-        }
-    }
-
-    const viewRec = await Recommendation.find(criteria)
-    .select('recommend therapist date status')
-    res.status(200).json({
-      data: viewRec
+  //   try {
+  //     const {status = ''} = req.query;
+  //     let criteria ={}
+  
+  //     if(status.length){
+  //         criteria ={
+  //             ...criteria,
+  //             status:{$regex: `${status}`,$options:'i'}
+  //         }
+  //     }
+  
+  //     if(req.patient_id){
+  //         criteria={
+  //             ...criteria,
+  //             patient: req.patient._id
+  //         }
+  //     }
+  
+  //     const history = await Transaction.find(criteria)
+  //     let totalTransaction = await Transaction.aggregate([
+  //         { $match: criteria },
+  //         {
+  //           $group: {
+  //             _id: null,
+  //             total: { $sum: "$total" }
+  //           }
+  //         }
+  //       ])
+  //     res.status(200).json({
+  //         data: history,
+  //         totalTransaction: totalTransaction.length ? totalTransaction[0].total : 0
+  
+  //     })
+      
+  // } catch (error) {
+  //     res.status(500).json({
+  //         message: err.message || 'Internal Server Error' 
+  //       })
+  // }
+    try {
+      const {primaryComplain, diagnosis, date} = req.body
+      const {status = ''} = req.query;
+      let criteria ={}
+  
+      if(status.length){
+          criteria ={
+              ...criteria,
+              status:{$regex: `${status}`,$options:'i'}
+          }
+      }
+  
+      if(req.patient_id){
+          criteria={
+              ...criteria,
+              patient: req.patient._id,
+          }
+      }
+  
+      const viewRec = await Recommendation.find(criteria)
+      let totalRec = await Recommendation.aggregate([
+                { $match: criteria },
+                {
+                  $group: {
+                    _id: null,
+                  }
+                }
+              ])
+      // .select('recommend therapist date status')
+      res.status(200).json({
+        data: viewRec,
+        totalRec: totalRec.length ? totalRec[0].total : 0
+      })
+  
+  } catch (err) {
+    res.status(500).json({
+      message: err.message || 'Internal Server Error' 
     })
-
-} catch (err) {
-  res.status(500).json({
-    message: err.message || 'Internal Server Error' 
-  })
-}
-}
+  }
+  }
 
 
 
