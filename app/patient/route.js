@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const {landingPage, detaiTherapistPage, book, treatmentDetail,paymentMethod,history,historyDetail,
   dashboard,profile,editProfile, 
-  detailPriceTreatmentPage, ques, reservationPage,recommendation,emr,checkupHistory,patientRecommendation} = require('./controller')
+  detailPriceTreatmentPage, ques, reservationPage,recommendation,emr,recommendationHistory,checkupHistory,patientRecommendation} = require('./controller')
 
 const { isLoginPatient } = require('../middleware/auth')
 const multer = require('multer')
@@ -21,6 +21,8 @@ router.post('/ques',isLoginPatient, ques);
 router.get('/history',isLoginPatient, history);
 router.get('/history/:id/detail', isLoginPatient, historyDetail);
 router.get('/dashboard', isLoginPatient, dashboard);
+router.get('/recommendHistory', isLoginPatient, recommendationHistory);
+
 router.get('/reservationPage',isLoginPatient, reservationPage);
 router.get('/profile', isLoginPatient, profile);
 router.put('/profile',

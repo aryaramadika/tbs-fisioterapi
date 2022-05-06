@@ -1,5 +1,7 @@
 const Recommendation = require('./model')
 const EMR = require('../emr/model')
+const Patient = require('../patient/model')
+
 const Therapist = require('../therapist/model')
 
 module.exports ={
@@ -12,6 +14,7 @@ module.exports ={
             const recommendation = await Recommendation.find()
             .populate('therapist')
             .populate('emr')
+            .populate('patient')
             console.log('alert >>>')
             // console.log(recommendation)
 
@@ -32,9 +35,12 @@ module.exports ={
         try {
             const therapist = await Therapist.find()
             const emr = await EMR.find()
+            const patient = await Patient.find()
+
             res.render('admin/recommendation/create',{
                 therapist,
                 emr,
+                patient,
                 name: req.session.user.name,
                 title: 'Add Recommendation Page'
             })
@@ -47,18 +53,19 @@ module.exports ={
   
     actionCreate : async(req,res)=>{
         try {
-            let {emr,recommend,date,therapist} =  req.body
+            let {emr,recommend,date,therapist,patient} =  req.body
             let recommendation = await Recommendation({
                 emr,
                 recommend,
                 date,
-                therapist
+                therapist,
+                patient
             })
             console.log(req.body)
             console.log(recommendation)
             await recommendation.save();
-            console.log(req.body)
-            console.log(recommendation)
+            // console.log(req.body)
+            // console.log(recommendation)
             req.flash('alertMessage',"added successfully")
             req.flash('alertStatus', "success")
             console.log('Berhasil')

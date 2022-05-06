@@ -361,7 +361,45 @@ module.exports = {
           .sort({ 'updatedAt': -1 })
 
           console.log(count.data)
+          console.log('first')
+          console.log(req.que.patient._id)
           res.status(200).json({ data: history, count: count })
+
+        } catch (err) {
+          res.status(500).json({ message: err.message || `Internal server error` })
+        }
+      },
+      recommendationHistory:async(req, res) => {
+        try {
+          const count = await Recommendation.aggregate([
+            {$match :{
+              patient: req.patient._id
+            }},
+            {
+              $group:{
+                _id: '$patient',
+                // total: {$sum: '$total'}
+              }
+            }
+          ])
+        const patient = await Patient.find({})
+        patient.forEach(element => {
+        count.forEach(data => {
+          if (data._id.toString() === element._id.toString()) {
+            data.name = element.name
+            console.log(element.name)
+              }
+          } )
+          });
+          const history = await Recommendation.find({ patient: req.patient._id })
+          .populate('que')
+          .sort({ 'updatedAt': -1 })
+
+          console.log(count.data)
+          res.status(200).json({ data: history, count: count })
+          console.log('first')
+          console.log(req.que.patient._id)
+
 
         } catch (err) {
           res.status(500).json({ message: err.message || `Internal server error` })
@@ -501,7 +539,7 @@ module.exports = {
       }
 
       const cpHistory = await EMR.find(criteria)
-      let totalCP = await EMR.aggregate([
+      let totalCP = await Queue.aggregate([
         { $match: criteria },
         {
           $group: {
@@ -563,34 +601,35 @@ patientRecommendation: async(req, res) =>{
   //       })
   // }
     try {
-      const {primaryComplain, diagnosis, date} = req.body
-      const {status = ''} = req.query;
-      let criteria ={}
+      // const {primaryComplain, diagnosis, date} = req.body
+      // const {status = ''} = req.query;
+      // let criteria ={}
   
-      if(status.length){
-          criteria ={
-              ...criteria,
-              status:{$regex: `${status}`,$options:'i'}
-          }
-      }
+      // if(status.length){
+      //     criteria ={
+      //         ...criteria,
+      //         status:{$regex: `${status}`,$options:'i'}
+      //     }
+      // }
   
-      if(req.patient_id){
-          criteria={
-              ...criteria,
-              patient: req.patient._id,
-          }
-      }
+      // if(req.patient_id){
+      //     criteria={
+      //         ...criteria,
+      //         patient: req.patient._id,
+      //     }
+      // }
   
-      const viewRec = await Recommendation.find(criteria)
+      const viewRec = await Recommendation.find({ patient: req.patient._id })
+      .select('recommend therapist date status')
       let totalRec = await Recommendation.aggregate([
-                { $match: criteria },
+                { $match: { patient: req.patient._id } },
                 {
                   $group: {
-                    _id: null,
+                    _id: '$patient',
                   }
                 }
               ])
-      // .select('recommend therapist date status')
+      
       res.status(200).json({
         data: viewRec,
         totalRec: totalRec.length ? totalRec[0].total : 0
