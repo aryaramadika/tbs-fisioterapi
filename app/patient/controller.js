@@ -290,7 +290,7 @@ module.exports = {
                 }
             }
 
-            if(req.patient_id){
+            if(req.patient._id){
                 criteria={
                     ...criteria,
                     patient: req.patient._id
