@@ -369,42 +369,42 @@ module.exports = {
           res.status(500).json({ message: err.message || `Internal server error` })
         }
       },
-      // recommendationHistory:async(req, res) => {
-      //   try {
-      //     const count = await Recommendation.aggregate([
-      //       {$match :{
-      //         patient: req.patient._id
-      //       }},
-      //       {
-      //         $group:{
-      //           _id: '$patient',
-      //           // total: {$sum: '$total'}
-      //         }
-      //       }
-      //     ])
-      //   const patient = await Patient.find({})
-      //   patient.forEach(element => {
-      //   count.forEach(data => {
-      //     if (data._id.toString() === element._id.toString()) {
-      //       data.name = element.name
-      //       console.log(element.name)
-      //         }
-      //     } )
-      //     });
-      //     const history = await Recommendation.find({ patient: req.patient._id })
-      //     .populate('que')
-      //     .sort({ 'updatedAt': -1 })
+      recommendationHistory:async(req, res) => {
+        try {
+          const count = await Recommendation.aggregate([
+            {$match :{
+              patient: req.patient._id
+            }},
+            {
+              $group:{
+                _id: '$patient',
+                // total: {$sum: '$total'}
+              }
+            }
+          ])
+        const patient = await Patient.find({})
+        patient.forEach(element => {
+        count.forEach(data => {
+          if (data._id.toString() === element._id.toString()) {
+            data.name = element.name
+            console.log(element.name)
+              }
+          } )
+          });
+          const history = await Recommendation.find({ patient: req.patient._id })
+          .populate('que')
+          .sort({ 'updatedAt': -1 })
 
-      //     console.log(count.data)
-      //     res.status(200).json({ data: history, count: count })
-      //     console.log('first')
-      //     console.log(req.que.patient._id)
+          console.log(count.data)
+          res.status(200).json({ data: history, count: count })
+          console.log('first')
+          console.log(req.que.patient._id)
 
 
-      //   } catch (err) {
-      //     res.status(500).json({ message: err.message || `Internal server error` })
-      //   }
-      // },
+        } catch (err) {
+          res.status(500).json({ message: err.message || `Internal server error` })
+        }
+      },
       profile: async(req,res) =>{
         try {
           const patient ={
