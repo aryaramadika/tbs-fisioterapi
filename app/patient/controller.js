@@ -370,7 +370,7 @@ module.exports = {
       },
       recommendationHistory:async(req, res) => {
         try {
-          const count = await Recommendation.aggregate([
+          const countRecommend = await Recommendation.aggregate([
             {$match :{
               patient: req.patient._id
             }},
@@ -383,21 +383,21 @@ module.exports = {
           ])
         const patient = await Patient.find({})
         patient.forEach(element => {
-        count.forEach(data => {
+          countRecommend.forEach(data => {
           if (data._id.toString() === element._id.toString()) {
             data.name = element.name
             console.log(element.name)
               }
           } )
           });
-          const history = await Recommendation.find({ patient: req.patient._id })
+          const recommendhistory = await Recommendation.find({ patient: req.patient._id })
           .populate('que')
           .sort({ 'updatedAt': -1 })
 
-          console.log(count.data)
-          res.status(200).json({ data: history, count: count })
+          console.log(countRecommend.data)
+          res.status(200).json({ data: recommendhistory, countRecommend: countRecommend })
           console.log('first')
-          console.log(req.que.patient._id)
+          
 
 
         } catch (err) {
