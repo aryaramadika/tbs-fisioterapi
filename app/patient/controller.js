@@ -391,6 +391,7 @@ module.exports = {
           } )
           });
           const recommendhistory = await Recommendation.find({ patient: req.patient._id })
+          .select('emr')
           .populate('que')
           .sort({ 'updatedAt': -1 })
 
