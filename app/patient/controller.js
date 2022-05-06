@@ -362,7 +362,6 @@ module.exports = {
 
           console.log(count.data)
           console.log('first')
-          console.log(req.que.patient._id)
           res.status(200).json({ data: history, count: count })
 
         } catch (err) {
